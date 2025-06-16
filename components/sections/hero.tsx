@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from 'framer-motion';
-import { ArrowDown, Github, Linkedin, Mail } from 'lucide-react';
+import { ArrowDown, Github, Instagram, Linkedin, Mail } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ShaderBackground } from '@/components/three/shader-background';
 import { ContainerTextFlip } from '../ui/container-text-flip';
@@ -101,6 +101,15 @@ export function Hero() {
               >
                 <Github className="h-6 w-6" />
               </a>
+              <a
+                href="https://www.instagram.com/syntax_3d/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-muted-foreground hover:text-primary transition-colors duration-200"
+                aria-label="Instagram"
+              >
+                <Instagram className="h-6 w-6" />
+              </a>
             </motion.div>
           </motion.div>
 
@@ -108,12 +117,12 @@ export function Hero() {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 1, duration: 0.8 }}
+            transition={{ delay: 1, duration: 2 }}
             className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20"
           >
             <button
               onClick={scrollToAbout}
-              className="animate-bounce text-muted-foreground hover:text-primary transition-colors duration-200 p-2"
+              className="animate-bounce text-muted-foreground hover:text-primary transition-colors duration-400 p-2"
               aria-label="Scroll to about section"
             >
               <ArrowDown className="h-6 w-6" />

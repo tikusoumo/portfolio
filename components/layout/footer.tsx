@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from 'framer-motion';
-import { Github, Linkedin, Mail, Heart } from 'lucide-react';
+import { Github, Linkedin, Mail, Heart, Instagram } from 'lucide-react';
 
 export function Footer() {
   const socialLinks = [
@@ -19,6 +19,11 @@ export function Footer() {
       name: 'GitHub',
       href: 'https://github.com/tikusoumo',
       icon: Github,
+    },
+    {
+      name: 'Instagram',
+      href: 'https://www.instagram.com/syntax_3d/',
+      icon: Instagram,
     },
   ];
 
