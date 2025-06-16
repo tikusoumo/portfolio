@@ -1,8 +1,8 @@
 "use client";
 
 import { motion } from 'framer-motion';
-import { Card, CardContent } from '@/components/ui/card';
 import { ShaderBackground } from '../three/shader-background';
+import Image from 'next/image';
 
 export function About() {
   return (
@@ -32,22 +32,15 @@ export function About() {
           >
             <h3 className="text-2xl font-semibold mb-4">My Journey</h3>
             <p className="text-muted-foreground leading-relaxed">
-              I&apos;m currently pursuing my Bachelor of Science in Computer Science Engineering at 
-              Ninja Institute of Technology (2022-2026). My journey in web development began with 
-              a curiosity about how websites work, which quickly evolved into a passion for creating 
-              beautiful, functional digital experiences.
+              I&apos;m a designer-developer hybrid who loves fusing art with technology to craft immersive digital experiences. 
+              From building full-stack applications to creating 2D/3D motion graphics and animation, I enjoy working at the 
+              intersection of creativity and code.
             </p>
             
             <p className="text-muted-foreground leading-relaxed">
-              As a Full Stack Web Developer, I specialize in modern technologies like React, Next.js, 
-              Node.js, and TypeScript. I enjoy the challenge of solving complex problems and turning 
-              ideas into reality through clean, efficient code.
-            </p>
-
-            <p className="text-muted-foreground leading-relaxed">
-              When I&apos;m not coding, you can find me exploring new technologies, contributing to open-source 
-              projects, or sharing knowledge with the developer community. I believe in continuous learning 
-              and staying updated with the latest industry trends.
+              While I&apos;m capable of building complete apps on my own, I thrive in collaborative environments 
+              where ideas grow stronger as a team. Always curious and open to new tools, I welcome challenges 
+              that push me to learn, adapt, and innovate.
             </p>
           </motion.div>
 
@@ -56,35 +49,18 @@ export function About() {
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
             viewport={{ once: true }}
-            className="grid grid-cols-1 sm:grid-cols-2 gap-4"
+            className="flex flex-col items-center justify-center space-y-6"
           >
-            <Card className="border-0 bg-gradient-to-br from-primary/10 to-purple-500/10 hover:from-primary/20 hover:to-purple-500/20 transition-all duration-300">
-              <CardContent className="p-6 text-center">
-                <h4 className="text-2xl font-bold text-primary mb-2">2+</h4>
-                <p className="text-sm text-muted-foreground">Years of Experience</p>
-              </CardContent>
-            </Card>
-
-            <Card className="border-0 bg-gradient-to-br from-teal-500/10 to-green-500/10 hover:from-teal-500/20 hover:to-green-500/20 transition-all duration-300">
-              <CardContent className="p-6 text-center">
-                <h4 className="text-2xl font-bold text-teal-600 mb-2">10+</h4>
-                <p className="text-sm text-muted-foreground">Projects Completed</p>
-              </CardContent>
-            </Card>
-
-            <Card className="border-0 bg-gradient-to-br from-orange-500/10 to-red-500/10 hover:from-orange-500/20 hover:to-red-500/20 transition-all duration-300">
-              <CardContent className="p-6 text-center">
-                <h4 className="text-2xl font-bold text-orange-600 mb-2">15+</h4>
-                <p className="text-sm text-muted-foreground">Technologies Mastered</p>
-              </CardContent>
-            </Card>
-
-            <Card className="border-0 bg-gradient-to-br from-purple-500/10 to-pink-500/10 hover:from-purple-500/20 hover:to-pink-500/20 transition-all duration-300">
-              <CardContent className="p-6 text-center">
-                <h4 className="text-2xl font-bold text-purple-600 mb-2">100+</h4>
-                <p className="text-sm text-muted-foreground">Students Mentored</p>
-              </CardContent>
-            </Card>
+            <div className="relative w-[300px] h-[300px] rounded-full overflow-hidden border-4 border-primary/20 shadow-xl">
+              <Image 
+                src="/profile.jpg" 
+                alt="Profile picture" 
+                fill 
+                className="object-cover"
+                priority
+              />
+            </div>
+         
           </motion.div>
         </div>
       </div>

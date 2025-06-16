@@ -43,8 +43,8 @@ export function Contact() {
     {
       icon: Mail,
       title: 'Email',
-      value: 'soumojitatrong@gmail.com',
-      href: 'mailto:soumojitatrong@gmail.com'
+      value: 'soumojitdatta2050@gmail.com',
+      href: 'mailto:soumojitdatta2050@gmail.com'
     },
     {
       icon: MapPin,
@@ -52,12 +52,7 @@ export function Contact() {
       value: 'India',
       href: null
     },
-    {
-      icon: Phone,
-      title: 'Available',
-      value: 'Mon - Fri, 9AM - 6PM',
-      href: null
-    }
+ 
   ];
 
   return (
@@ -72,7 +67,7 @@ export function Contact() {
         >
           <h2 className="text-3xl sm:text-4xl font-bold mb-4">Get In Touch</h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Have a project in mind or want to collaborate? I'd love to hear from you.
+            Have a project in mind or want to collaborate? I&apos;d love to hear from you.
           </p>
         </motion.div>
 

@@ -8,11 +8,11 @@ import { ExternalLink, Github } from 'lucide-react';
 
 const projects = [
   {
-    title: 'Workflow Automation SaaS',
+    title: 'Flooow - Workflow Automation SaaS',
     description: 'A comprehensive workflow automation platform built with modern web technologies. Features include drag-and-drop workflow builder, real-time monitoring, and integration with popular services.',
     longDescription: 'This project represents a full-scale SaaS application designed to streamline business processes through automation. The platform allows users to create complex workflows using a visual drag-and-drop interface, monitor execution in real-time, and integrate with over 50+ popular services including Slack, Gmail, and various databases.',
-    image: 'https://images.pexels.com/photos/3861958/pexels-photo-3861958.jpeg?auto=compress&cs=tinysrgb&w=800',
-    technologies: ['Next.js', 'TypeScript', 'Node.js', 'MongoDB', 'Tailwind CSS', 'Socket.io'],
+    image: './1.png',
+    technologies: ['Next.js','NestJs','MCP server(custom)', 'TypeScript', 'Node.js',  'PostgreSQL','prisma','redis', 'Tailwind CSS', 'React Query'],
     features: [
       'Visual workflow builder with drag-and-drop functionality',
       'Real-time workflow monitoring and analytics',
@@ -21,49 +21,27 @@ const projects = [
       'Multi-tenant architecture with role-based access',
       'Comprehensive audit logs and error handling'
     ],
-    demoUrl: '#',
-    githubUrl: '#',
+    demoUrl: 'https://www.flooow.xyz',
+    githubUrl: 'https://github.com/tikusoumo/Flow',
     status: 'In Development',
     category: 'SaaS Platform'
   },
   {
-    title: 'E-Commerce Platform',
-    description: 'A modern e-commerce solution with advanced features like real-time inventory management, payment processing, and analytics dashboard.',
-    longDescription: 'A full-featured e-commerce platform designed for modern online businesses. Built with scalability in mind, it handles everything from product catalog management to order processing and customer analytics.',
-    image: 'https://images.pexels.com/photos/230544/pexels-photo-230544.jpeg?auto=compress&cs=tinysrgb&w=800',
-    technologies: ['React.js', 'Node.js', 'Express.js', 'PostgreSQL', 'Stripe', 'AWS'],
+    title: 'Threejs Shader',
+    description: ' Wave shader in react three fibre ',
+    longDescription: 'custom shader background in react three fibre that have different parameter that can be change in real time',
+    image: './2.png',
+    technologies: ['Next.js','threejs'],
     features: [
-      'Product catalog with advanced filtering',
-      'Shopping cart and checkout process',
-      'Payment processing with Stripe integration',
-      'Order management and tracking',
-      'Admin dashboard with analytics',
-      'Responsive design for all devices'
+      'Custom shader background',
     ],
-    demoUrl: '#',
-    githubUrl: '#',
+    demoUrl: 'https://three-js-shaders.vercel.app/',
+    githubUrl: 'https://github.com/tikusoumo/ThreeJS-Shaders',
     status: 'Completed',
-    category: 'Web Application'
+    category: 'Miscellaneous'
   },
-  {
-    title: 'Social Media Dashboard',
-    description: 'A comprehensive social media management tool that allows users to schedule posts, analyze engagement, and manage multiple accounts from one platform.',
-    longDescription: 'This dashboard application helps businesses and content creators manage their social media presence across multiple platforms. It provides powerful analytics, content scheduling, and engagement tracking features.',
-    image: 'https://images.pexels.com/photos/267350/pexels-photo-267350.jpeg?auto=compress&cs=tinysrgb&w=800',
-    technologies: ['Vue.js', 'Python', 'FastAPI', 'Redis', 'PostgreSQL', 'Chart.js'],
-    features: [
-      'Multi-platform post scheduling',
-      'Engagement analytics and reporting',
-      'Content calendar management',
-      'Team collaboration tools',
-      'Automated hashtag suggestions',
-      'Performance tracking and insights'
-    ],
-    demoUrl: '#',
-    githubUrl: '#',
-    status: 'Completed',
-    category: 'Dashboard'
-  }
+   
+  
 ];
 
 export function Projects() {
@@ -79,7 +57,7 @@ export function Projects() {
         >
           <h2 className="text-3xl sm:text-4xl font-bold mb-4">Featured Projects</h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            A showcase of my recent work and the technologies I've used to bring ideas to life
+            A showcase of my recent work and the technologies I&apos;ve used to bring ideas to life
           </p>
         </motion.div>
 

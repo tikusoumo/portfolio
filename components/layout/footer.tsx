@@ -7,17 +7,17 @@ export function Footer() {
   const socialLinks = [
     {
       name: 'Email',
-      href: 'mailto:soumojitatrong@gmail.com',
+      href: 'mailto:soumojitdatta2050@gmail.com',
       icon: Mail,
     },
     {
       name: 'LinkedIn',
-      href: 'https://linkedin.com/in/soumojitatrong',
+      href: 'https://www.linkedin.com/in/soumojit-datta-83629a233/',
       icon: Linkedin,
     },
     {
       name: 'GitHub',
-      href: 'https://github.com/srdcssomu',
+      href: 'https://github.com/tikusoumo',
       icon: Github,
     },
   ];

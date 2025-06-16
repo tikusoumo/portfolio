@@ -77,14 +77,14 @@ export function Hero() {
               className="flex justify-center space-x-6 mt-8"
             >
               <a
-                href="mailto:soumojitatrong@gmail.com"
+                href="mailto:soumojitdatta2050@gmail.com"
                 className="text-muted-foreground hover:text-primary transition-colors duration-200"
                 aria-label="Email"
               >
                 <Mail className="h-6 w-6" />
               </a>
               <a
-                href="https://linkedin.com/in/soumojitatrong"
+                href="https://www.linkedin.com/in/soumojit-datta-83629a233/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-muted-foreground hover:text-primary transition-colors duration-200"
@@ -93,7 +93,7 @@ export function Hero() {
                 <Linkedin className="h-6 w-6" />
               </a>
               <a
-                href="https://github.com/srdcssomu"
+                href="https://github.com/tikusoumo"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-muted-foreground hover:text-primary transition-colors duration-200"

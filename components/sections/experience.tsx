@@ -14,16 +14,16 @@ const experiences = [
     type: 'Freelance',
     description: [
       'Designed and developed custom web applications for clients in e-commerce, healthcare, and education domains',
-      'Built scalable backend APIs using Node.js and Express, integrating MongoDB and PostgreSQL databases',
+      'Built scalable backend APIs using Node.js and Express,Nestjs, integrating MongoDB and PostgreSQL databases and working with monorepos',
       'Delivered end-to-end responsive UIs using Next.js and Tailwind CSS, improving client engagement metrics',
     ],
-    technologies: ['Next.js', 'Node.js', 'MongoDB', 'PostgreSQL', 'Tailwind CSS', 'TypeScript'],
+    technologies: ['React Js','Next.js', 'Node.js', 'MongoDB', 'PostgreSQL', 'Tailwind CSS', 'TypeScript','Turborepo','vercel','Nestjs','React Native'],
   },
   {
     title: 'Web Development Associate',
     company: 'Google Developer Student Club (DSC)',
     period: 'Aug 2023 - Aug 2024',
-    location: 'Ninja Institute of Technology',
+    location: 'Narula Institute of Technology',
     type: 'Student Leadership',
     description: [
       'Collaborated with a cross-functional team to build and maintain internal tools and event platforms for student engagement',

@@ -8,26 +8,32 @@ const skillCategories = [
   {
     title: 'Languages',
     skills: ['JavaScript', 'TypeScript', 'Python', 'Java', 'C++', 'Rust', 'Golang', 'Bash'],
-    gradient: 'from-blue-500/20 to-cyan-500/20',
-    hoverGradient: 'hover:from-blue-500/30 hover:to-cyan-500/30',
+    gradient: 'from-blue-500 to-cyan-500/20',
+    hoverGradient: 'hover:from-blue-500 hover:to-cyan-500/30',
   },
   {
     title: 'Frameworks & Libraries',
-    skills: ['React.js', 'Next.js', 'Node.js', 'Express.js', 'Tailwind CSS', 'Framer Motion'],
-    gradient: 'from-green-500/20 to-emerald-500/20',
-    hoverGradient: 'hover:from-green-500/30 hover:to-emerald-500/30',
+    skills: ['React.js', 'Next.js', 'React Native','Nestjs', 'Node.js', 'Express.js', 'Tailwind CSS', 'Framer Motion'],
+    gradient: 'from-green-500 to-emerald-500/20',
+    hoverGradient: 'hover:from-green-500 hover:to-emerald-500/30',
   },
   {
     title: 'Development Tools',
     skills: ['VS Code', 'Git', 'Docker', 'Postman', 'GitHub', 'Vercel', 'Figma', 'AWS'],
-    gradient: 'from-purple-500/20 to-pink-500/20',
-    hoverGradient: 'hover:from-purple-500/30 hover:to-pink-500/30',
+    gradient: 'from-purple-500 to-pink-500/20',
+    hoverGradient: 'hover:from-purple-500 hover:to-pink-500/30',
   },
   {
     title: 'Databases & Technologies',
     skills: ['MongoDB', 'PostgreSQL', 'Firebase', 'Supabase', 'Redis', 'GraphQL'],
-    gradient: 'from-orange-500/20 to-red-500/20',
-    hoverGradient: 'hover:from-orange-500/30 hover:to-red-500/30',
+    gradient: 'from-orange-500 to-red-500/20',
+    hoverGradient: 'hover:from-orange-500 hover:to-red-500/30',
+  },
+  {
+    title: 'Creative Tools',
+    skills: ['Blender', 'Figma', 'Adobe XD', 'Adobe Illustrator', 'Adobe Photoshop','After effects'],
+    gradient: 'from-yellow-500 to-amber-500/20',
+    hoverGradient: 'hover:from-yellow-500 hover:to-amber-500/30',
   },
 ];
 
