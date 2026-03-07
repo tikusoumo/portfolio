@@ -75,16 +75,28 @@ export function Header() {
             {/* Logo area */}
             <div className={cn(
               "relative flex items-center justify-center transition-all duration-300 group-hover:shadow-[0_0_15px_hsl(var(--primary))]",
-              universe === 'lol' ? "w-12 h-12 border-2 border-primary rounded-full bg-background" : 
+              universe === 'lol' ? "w-12 h-[52px] bg-[hsl(var(--background))] border-none" : 
               universe === 'valorant' ? "w-12 h-12 bg-primary text-background font-mono clip-path-slant" :
               "w-12 h-12 border border-accent bg-background shadow-[0_0_10px_hsl(var(--accent))]"
-            )}>
+            )}
+            style={universe === 'lol' ? { 
+              clipPath: 'polygon(50% 100%, 0 80%, 0 0, 100% 0, 100% 80%)',
+              background: 'linear-gradient(180deg, hsl(var(--background)) 0%, hsl(var(--primary)/0.2) 100%)',
+              borderTop: '2px solid hsl(var(--primary))'
+            } : {}}>
+              <div 
+                className={cn(
+                  "absolute inset-0 bg-primary/20",
+                  universe !== 'lol' && "hidden"
+                )} 
+                style={{ clipPath: 'polygon(50% 100%, 0 80%, 0 0, 100% 0, 100% 80%)', transform: 'scale(0.9)' }} 
+              />
               <span className={cn(
-                "text-xl font-bold tracking-widest transition-colors duration-300",
-                universe === 'lol' ? "font-heading text-foreground group-hover:text-primary" :
-                universe === 'valorant' ? "text-background" :
-                "font-mono text-accent"
-              )}>
+                "relative z-10 text-xl transition-colors duration-300 flex items-center justify-center leading-none",
+                universe === 'lol' ? "font-serif font-black text-foreground group-hover:text-primary tracking-normal" :
+                universe === 'valorant' ? "text-background font-bold tracking-widest" :
+                "font-mono text-accent font-bold tracking-widest"
+              )} style={universe === 'lol' ? { marginTop: '2px', marginLeft: '1px' } : {}}>
                 {meta.initials}
               </span>
             </div>
@@ -134,7 +146,6 @@ export function Header() {
 
           <div className="flex items-center space-x-4">
             <AudioToggle />
-            <ThemeToggle />
             
             {/* Mobile menu button */}
             <div className="md:hidden">

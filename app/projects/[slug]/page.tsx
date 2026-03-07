@@ -16,8 +16,9 @@ export function generateStaticParams() {
     }));
 }
 
-export default function ProjectCaseStudyPage({ params }: { params: { slug: string } }) {
-  const project = projectsData.projects.find((p: any) => p.slug === params.slug) as any;
+export default async function ProjectCaseStudyPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const project = projectsData.projects.find((p: any) => p.slug === slug) as any;
 
   if (!project) {
     notFound();
@@ -65,9 +66,99 @@ export default function ProjectCaseStudyPage({ params }: { params: { slug: strin
             </div>
           )}
 
-          <div className="prose prose-invert prose-lg max-w-none mb-16">
+          {/* Visual Story Section */}
+          {project.story && (
+            <div className="mb-16">
+              <h2 className="text-3xl font-bold font-heading mb-6 border-b border-border pb-4">The Story</h2>
+              <div className="prose prose-invert prose-lg max-w-none text-muted-foreground leading-relaxed">
+                <p className="whitespace-pre-wrap text-lg md:text-xl font-light">{project.story}</p>
+              </div>
+            </div>
+          )}
+
+          {/* SWOT Analysis Grid */}
+          {project.swot && (
+            <div className="mb-16">
+              <h2 className="text-3xl font-bold font-heading mb-8 border-b border-border pb-4">SWOT Analysis</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                
+                {/* Strengths */}
+                <div className="bg-secondary/20 border border-green-500/20 rounded-xl p-6 hover:shadow-[0_0_15px_rgba(34,197,94,0.1)] transition-all">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="p-2 bg-green-500/10 rounded-lg">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-green-500"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" /></svg>
+                    </div>
+                    <h3 className="text-xl font-bold text-green-500">Strengths</h3>
+                  </div>
+                  <ul className="space-y-3">
+                    {project.swot.strengths.map((item: string, i: number) => (
+                      <li key={i} className="flex items-start gap-2 text-muted-foreground text-sm">
+                        <span className="text-green-500 mt-1">•</span> {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* Weaknesses */}
+                <div className="bg-secondary/20 border border-red-500/20 rounded-xl p-6 hover:shadow-[0_0_15px_rgba(239,68,68,0.1)] transition-all">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="p-2 bg-red-500/10 rounded-lg">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-red-500"><path d="M7 21h10"/><path d="M12 21v-4"/><path d="M12 13V3"/><path d="M19 10a7 7 0 0 0-14 0"/></svg>
+                    </div>
+                    <h3 className="text-xl font-bold text-red-500">Weaknesses</h3>
+                  </div>
+                  <ul className="space-y-3">
+                    {project.swot.weaknesses.map((item: string, i: number) => (
+                      <li key={i} className="flex items-start gap-2 text-muted-foreground text-sm">
+                        <span className="text-red-500 mt-1">•</span> {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* Opportunities */}
+                <div className="bg-secondary/20 border border-blue-500/20 rounded-xl p-6 hover:shadow-[0_0_15px_rgba(59,130,246,0.1)] transition-all">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="p-2 bg-blue-500/10 rounded-lg">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-blue-500"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+                    </div>
+                    <h3 className="text-xl font-bold text-blue-500">Opportunities</h3>
+                  </div>
+                  <ul className="space-y-3">
+                    {project.swot.opportunities.map((item: string, i: number) => (
+                      <li key={i} className="flex items-start gap-2 text-muted-foreground text-sm">
+                        <span className="text-blue-500 mt-1">•</span> {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* Threats */}
+                <div className="bg-secondary/20 border border-amber-500/20 rounded-xl p-6 hover:shadow-[0_0_15px_rgba(245,158,11,0.1)] transition-all">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="p-2 bg-amber-500/10 rounded-lg">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-amber-500"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+                    </div>
+                    <h3 className="text-xl font-bold text-amber-500">Threats</h3>
+                  </div>
+                  <ul className="space-y-3">
+                    {project.swot.threats.map((item: string, i: number) => (
+                      <li key={i} className="flex items-start gap-2 text-muted-foreground text-sm">
+                        <span className="text-amber-500 mt-1">•</span> {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+              </div>
+            </div>
+          )}
+
+          {/* Deep Dive Case Study (Original README) */}
+          <div className="prose prose-invert prose-lg max-w-none mb-16 mt-16 bg-card border border-border p-8 rounded-xl shadow-lg">
              {project.caseStudy ? (
                 <div className="font-body text-muted-foreground leading-relaxed">
+                  <h2 className="text-3xl font-bold font-heading mb-8 border-b border-border pb-4 text-foreground">Deep Dive Documentation</h2>
                   <ReactMarkdown remarkPlugins={[remarkGfm as any]}>
                     {project.caseStudy}
                   </ReactMarkdown>
