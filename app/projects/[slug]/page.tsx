@@ -17,7 +17,7 @@ export function generateStaticParams() {
 }
 
 export default function ProjectCaseStudyPage({ params }: { params: { slug: string } }) {
-  const project = projectsData.projects.find((p: any) => p.slug === params.slug);
+  const project = projectsData.projects.find((p: any) => p.slug === params.slug) as any;
 
   if (!project) {
     notFound();
