@@ -1,0 +1,41 @@
+{
+  "heading": "Technical Skills",
+  "subtitle": "A comprehensive overview of the technologies and tools I work with",
+  "categories": [
+    {
+      "title": "Languages",
+      "icon": "⚔️",
+      "skills": ["C++", "C", "Java", "Python", "Rust", "Golang", "TypeScript", "JavaScript", "HTML", "CSS", "SQL", "Bash"]
+    },
+    {
+      "title": "Frontend",
+      "icon": "🎨",
+      "skills": ["ReactJS", "Next.js", "Tailwind", "Three.js", "React Three Fiber", "Framer Motion", "GSAP"]
+    },
+    {
+      "title": "Backend",
+      "icon": "⚙️",
+      "skills": ["Node.js", "Express.js", "NestJs", "Springboot", "FastAPI"]
+    },
+    {
+      "title": "Mobile & OS",
+      "icon": "📱",
+      "skills": ["React Native", "Linux"]
+    },
+    {
+      "title": "AI & ML",
+      "icon": "🤖",
+      "skills": ["PyTorch", "TensorFlow", "LangChain", "LangGraph", "Pandas", "NumPy", "Hugging Face Hub", "OpenAI API"]
+    },
+    {
+      "title": "Databases",
+      "icon": "💾",
+      "skills": ["PostgreSQL", "MongoDB", "Qdrant (Vector DB)", "Redis"]
+    },
+    {
+      "title": "DevOps & Tools",
+      "icon": "🔧",
+      "skills": ["Git", "GitHub", "Docker", "AWS", "Vercel", "Turborepo", "VS Code", "Postman", "Figma", "Excel", "Power BI"]
+    }
+  ]
+}

@@ -4,6 +4,7 @@ import React, { useState, useEffect, useId } from "react";
 
 import { motion } from "framer-motion";
 import { cn } from "../../lib/utils";
+import { useGaming } from "@/components/gaming-provider";
 
 export interface ContainerTextFlipProps {
   /** Array of words to cycle through in the animation */
@@ -29,6 +30,7 @@ export function ContainerTextFlip({
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [width, setWidth] = useState(100);
   const textRef = React.useRef(null);
+  const { universe } = useGaming();
 
   const updateWidthForWord = () => {
     if (textRef.current) {
@@ -64,7 +66,9 @@ export function ContainerTextFlip({
         "[background:linear-gradient(to_bottom,#f3f4f6,#e5e7eb) ]",
         "shadow-[inset_0_-1px_#d1d5db,inset_0_0_0_1px_#d1d5db,_0_4px_8px_#d1d5db]",
         "dark:[background:linear-gradient(to_bottom,#111827,#1f2937) opacity-80]",
-        "dark:shadow-[inset_0_-1px_#10171e,inset_0_0_0_1px_hsla(205,89%,46%,.24),_0_4px_8px_#00000052] ",
+        "dark:shadow-[inset_0_-1px_#10171e,inset_0_0_0_1px_hsla(205,89%,46%,.24),_0_4px_8px_#00000052]",
+        universe === 'lol' && "font-heading",
+        (universe === 'valorant' || universe === 'cyberpunk') && "font-mono font-bold tracking-tight",
         className,
       )}
       key={words[currentWordIndex]}

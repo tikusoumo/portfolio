@@ -1,0 +1,33 @@
+{
+  "heading": "Blog",
+  "subtitle": "Thoughts, tutorials, and insights about web development, technology, and software engineering",
+  "posts": [
+    {
+      "title": "Building Scalable Web Applications with Next.js 13",
+      "excerpt": "Explore the latest features in Next.js 13 and how to leverage them for building performant, scalable web applications.",
+      "date": "2024-03-15",
+      "readTime": "8 min read",
+      "category": "Web Development",
+      "image": "https://images.pexels.com/photos/11035380/pexels-photo-11035380.jpeg?auto=compress&cs=tinysrgb&w=800",
+      "slug": "nextjs-13-scalable-applications"
+    },
+    {
+      "title": "TypeScript Best Practices for Large Projects",
+      "excerpt": "Learn essential TypeScript patterns and practices that will help you maintain clean, type-safe code in large-scale applications.",
+      "date": "2024-03-10",
+      "readTime": "12 min read",
+      "category": "TypeScript",
+      "image": "https://images.pexels.com/photos/4164418/pexels-photo-4164418.jpeg?auto=compress&cs=tinysrgb&w=800",
+      "slug": "typescript-best-practices"
+    },
+    {
+      "title": "Optimizing React Performance: Tips and Tricks",
+      "excerpt": "Discover advanced techniques for optimizing React application performance, from component optimization to bundle splitting.",
+      "date": "2024-03-05",
+      "readTime": "10 min read",
+      "category": "React",
+      "image": "https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg?auto=compress&cs=tinysrgb&w=800",
+      "slug": "react-performance-optimization"
+    }
+  ]
+}

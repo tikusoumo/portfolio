@@ -1,0 +1,24 @@
+{
+  "links": [
+    {
+      "name": "Email",
+      "icon": "Mail",
+      "href": "mailto:soumojitdatta2050@gmail.com"
+    },
+    {
+      "name": "LinkedIn",
+      "icon": "Linkedin",
+      "href": "https://www.linkedin.com/in/soumojit-datta-83629a233/"
+    },
+    {
+      "name": "GitHub",
+      "icon": "Github",
+      "href": "https://github.com/tikusoumo"
+    },
+    {
+      "name": "Instagram",
+      "icon": "Instagram",
+      "href": "https://www.instagram.com/syntax_3d/"
+    }
+  ]
+}

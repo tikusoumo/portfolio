@@ -1,77 +1,116 @@
 "use client";
 
 import { motion } from 'framer-motion';
-import { Github, Linkedin, Mail, Heart, Instagram } from 'lucide-react';
+import { Github, Linkedin, Mail, Instagram, Coins, Trophy, Zap, Terminal, Code2 } from 'lucide-react';
+import { useAudio } from '@/components/audio-provider';
+import { useGaming } from '@/components/gaming-provider';
+import { cn } from '@/lib/utils';
+import social from '@/content/social.json';
+import meta from '@/content/meta.json';
+
+const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
+  Mail,
+  Linkedin,
+  Github,
+  Instagram,
+};
 
 export function Footer() {
-  const socialLinks = [
-    {
-      name: 'Email',
-      href: 'mailto:soumojitdatta2050@gmail.com',
-      icon: Mail,
-    },
-    {
-      name: 'LinkedIn',
-      href: 'https://www.linkedin.com/in/soumojit-datta-83629a233/',
-      icon: Linkedin,
-    },
-    {
-      name: 'GitHub',
-      href: 'https://github.com/tikusoumo',
-      icon: Github,
-    },
-    {
-      name: 'Instagram',
-      href: 'https://www.instagram.com/syntax_3d/',
-      icon: Instagram,
-    },
-  ];
+  const { playHover, playClick } = useAudio();
+  const { universe } = useGaming();
 
   return (
-    <footer className="bg-muted/50 border-t border-border/50">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className="text-center space-y-8"
-        >
-          <div>
-            <h3 className="text-2xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent mb-2">
-              Soumojit Datta
-            </h3>
-            <p className="text-muted-foreground max-w-md mx-auto">
-              Full Stack Developer passionate about creating exceptional digital experiences
-            </p>
+    <footer className={cn(
+       "relative border-t-2",
+       universe === 'lol' && "bg-[#010a13] border-[#c8aa6e]",
+       universe === 'valorant' && "bg-background border-primary",
+       universe === 'cyberpunk' && "bg-background border-accent shadow-[0_-5px_15px_hsl(var(--accent)/0.2)]"
+    )}>
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col md:flex-row justify-between items-center gap-6">
+          
+          {/* Left: Chat/Version Info */}
+          <div className="flex items-center gap-4">
+             <div className={cn(
+                "px-3 py-1 text-xs font-bold uppercase tracking-wider",
+                universe === 'lol' && "bg-[#091428] border border-[#463714] text-[#a09b8c]",
+                universe === 'valorant' && "bg-primary/10 border border-primary text-primary clip-path-slant font-mono",
+                universe === 'cyberpunk' && "bg-accent/10 border border-accent text-accent font-mono"
+             )}>
+                V 14.23.1
+             </div>
+             <div className={cn(
+                "w-2 h-2 rounded-full",
+                universe === 'cyberpunk' ? "bg-accent shadow-[0_0_8px_hsl(var(--accent))]" : "bg-green-500 shadow-[0_0_5px_#0f0]"
+             )} />
+             <span className={cn(
+                "text-xs uppercase tracking-wider",
+                universe === 'lol' ? "text-[#a09b8c]" : "text-muted-foreground font-mono"
+             )}>Online</span>
           </div>
 
-          <div className="flex justify-center space-x-6">
-            {socialLinks.map((link) => (
-              <motion.a
-                key={link.name}
-                href={link.href}
-                target={link.href.startsWith('http') ? '_blank' : undefined}
-                rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
-                className="p-3 bg-background/80 rounded-full border border-border/50 hover:border-primary/50 hover:shadow-md transition-all duration-200"
-                aria-label={link.name}
-              >
-                <link.icon className="h-5 w-5 text-muted-foreground hover:text-primary transition-colors duration-200" />
-              </motion.a>
-            ))}
+          {/* Center: Socials */}
+          <div className="flex gap-4">
+             {social.links.map((link) => {
+                const IconComponent = iconMap[link.icon];
+                return (
+                   <a
+                      key={link.name}
+                      href={link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={cn(
+                         "transition-colors p-2",
+                         universe === 'lol' && "text-[#a09b8c] hover:text-[#c8aa6e]",
+                         universe === 'valorant' && "text-muted-foreground hover:text-primary",
+                         universe === 'cyberpunk' && "text-muted-foreground hover:text-accent hover:drop-shadow-[0_0_8px_hsl(var(--accent))]"
+                      )}
+                      onMouseEnter={() => playHover()}
+                      onClick={() => playClick()}
+                   >
+                      {IconComponent && <IconComponent className="w-5 h-5" />}
+                   </a>
+                );
+             })}
           </div>
 
-          <div className="pt-8 border-t border-border/50">
-            <p className="text-sm text-muted-foreground flex items-center justify-center gap-2">
-              Made with <Heart className="h-4 w-4 text-red-500 animate-pulse" /> by Soumojit Datta
-            </p>
-            <p className="text-xs text-muted-foreground mt-2">
-              © {new Date().getFullYear()} All rights reserved.
-            </p>
+          {/* Right: Currency Counters */}
+          <div className="flex items-center gap-6">
+             <div className="flex items-center gap-2" title={universe === 'lol' ? "Repositories (RP)" : universe === 'valorant' ? "Valorant Points (VP)" : "Street Cred"}>
+                {universe === 'lol' && <Trophy className="w-4 h-4 text-[#c8aa6e]" />}
+                {universe === 'valorant' && <Zap className="w-4 h-4 text-primary" />}
+                {universe === 'cyberpunk' && <Terminal className="w-4 h-4 text-accent" />}
+                
+                <span className={cn(
+                   "font-bold text-sm",
+                   universe === 'lol' ? "text-[#f0e6d2] font-heading" : "text-foreground font-mono"
+                )}>975</span>
+                
+                <span className={cn(
+                   "text-xs font-bold",
+                   universe === 'lol' ? "text-[#a09b8c]" : "text-muted-foreground font-mono"
+                )}>
+                   {universe === 'lol' ? 'RP' : universe === 'valorant' ? 'VP' : 'SC'}
+                </span>
+             </div>
+             
+             <div className="flex items-center gap-2" title={universe === 'lol' ? "Commits (Blue Essence)" : universe === 'valorant' ? "Radianite (RP)" : "Eddies"}>
+                {universe === 'lol' && <Coins className="w-4 h-4 text-[#0ac8b9]" />}
+                {universe === 'valorant' && <Code2 className="w-4 h-4 text-accent" />}
+                {universe === 'cyberpunk' && <Coins className="w-4 h-4 text-[#FCEE0A]" />}
+                
+                <span className={cn(
+                   "font-bold text-sm",
+                   universe === 'lol' ? "text-[#f0e6d2] font-heading" : "text-foreground font-mono"
+                )}>14,500</span>
+                
+                <span className={cn(
+                   "text-xs font-bold",
+                   universe === 'lol' ? "text-[#a09b8c]" : "text-muted-foreground font-mono"
+                )}>
+                   {universe === 'lol' ? 'BE' : universe === 'valorant' ? 'R' : 'E$'}
+                </span>
+             </div>
           </div>
-        </motion.div>
       </div>
     </footer>
   );

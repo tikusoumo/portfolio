@@ -1,0 +1,57 @@
+{
+  "heading": "Featured Projects",
+  "subtitle": "A showcase of my recent work and the technologies I've used to bring ideas to life",
+  "projects": [
+    {
+      "title": "Retail Inventory & Sales Optimization Analytics",
+      "description": "A complex data pipeline to aggregate transactional records and identify sales trends.",
+      "longDescription": "This project features a PostgreSQL data pipeline to manage and analyze sales data. It utilizes ABC Analysis and EOQ models built in Python (Pandas) to optimize stock levels and prevent overstocking. Additionally, time-series demand forecasting models predict inventory requirements to avoid stockouts.",
+      "image": "/placeholder.png",
+      "technologies": ["PostgreSQL", "Python", "Pandas"],
+      "features": [
+        "PostgreSQL data pipelines for sales trend analytics",
+        "ABC Analysis and EOQ models to optimize stock",
+        "Time-series demand forecasting"
+      ],
+      "demoUrl": "",
+      "githubUrl": "https://github.com/tikusoumo",
+      "status": "Feb 2026 - Ongoing",
+      "category": "Data Analytics",
+      "slug": "retail-inventory"
+    },
+    {
+      "title": "AI Interview Coach (MockMind AI)",
+      "description": "Multimodal platform using Computer Vision and NLP to analyze interview metrics.",
+      "longDescription": "Engineered a comprehensive multimodal software that analyzes human interviews through Computer Vision and NLP. It also leverages a reasoning engine backed by LangGraph, LangChain, and Qdrant Vector DB to deliver highly contextual insights for users to improve their interviewing skills.",
+      "image": "/placeholder.png",
+      "technologies": ["Computer Vision", "NLP", "LangGraph", "LangChain", "Qdrant Vector DB", "Python"],
+      "features": [
+        "Multimodal interview metric analysis",
+        "Reasoning engine powered by LangGraph/LangChain",
+        "Contextual insights via Qdrant Vector DB"
+      ],
+      "demoUrl": "",
+      "githubUrl": "https://github.com/tikusoumo",
+      "status": "Mar 2025 - Ongoing",
+      "category": "AI Platform",
+      "slug": "mockmind-ai"
+    },
+    {
+      "title": "Deductly (Tax Analytics RAG)",
+      "description": "RAG-powered financial tool for tax-saving suggestions via semantic search.",
+      "longDescription": "Developed an advanced retrieval-augmented generation (RAG) tool using TypeScript and Python. It indexes massive financial datasets to provide users with accurate, context-aware suggestions for tax savings by performing efficient semantic search over indexed tax documents.",
+      "image": "/placeholder.png",
+      "technologies": ["TypeScript", "Python", "RAG"],
+      "features": [
+        "RAG-powered contextual insights",
+        "Large dataset indexing",
+        "Semantic search functionality"
+      ],
+      "demoUrl": "",
+      "githubUrl": "https://github.com/tikusoumo",
+      "status": "Jun 2025 - Ongoing",
+      "category": "FinTech",
+      "slug": "deductly"
+    }
+  ]
+}

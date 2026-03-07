@@ -3,40 +3,9 @@
 import { motion } from 'framer-motion';
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 import { Calendar, Clock, ArrowRight } from 'lucide-react';
-
-const blogPosts = [
-  {
-    title: 'Building Scalable Web Applications with Next.js 13',
-    excerpt: 'Explore the latest features in Next.js 13 and how to leverage them for building performant, scalable web applications.',
-    date: '2024-03-15',
-    readTime: '8 min read',
-    category: 'Web Development',
-    image: 'https://images.pexels.com/photos/11035380/pexels-photo-11035380.jpeg?auto=compress&cs=tinysrgb&w=800',
-    slug: 'nextjs-13-scalable-applications'
-  },
-  {
-    title: 'TypeScript Best Practices for Large Projects',
-    excerpt: 'Learn essential TypeScript patterns and practices that will help you maintain clean, type-safe code in large-scale applications.',
-    date: '2024-03-10',
-    readTime: '12 min read',
-    category: 'TypeScript',
-    image: 'https://images.pexels.com/photos/4164418/pexels-photo-4164418.jpeg?auto=compress&cs=tinysrgb&w=800',
-    slug: 'typescript-best-practices'
-  },
-  {
-    title: 'Optimizing React Performance: Tips and Tricks',
-    excerpt: 'Discover advanced techniques for optimizing React application performance, from component optimization to bundle splitting.',
-    date: '2024-03-05',
-    readTime: '10 min read',
-    category: 'React',
-    image: 'https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg?auto=compress&cs=tinysrgb&w=800',
-    slug: 'react-performance-optimization'
-  }
-];
+import blogData from '@/content/blog.json';
 
 export default function Blog() {
   return (
@@ -44,100 +13,100 @@ export default function Blog() {
       <Header />
       
       <main className="pt-20">
-        <section className="py-20">
+        <section className="py-24">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            {/* Section Header */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
               className="text-center mb-16"
             >
-              <h1 className="text-4xl sm:text-5xl font-bold mb-4">
-                <span className="bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
-                  Blog
-                </span>
+              <h1 className="text-4xl sm:text-5xl font-heading font-bold gold-text-static mb-4 tracking-wider">
+                {blogData.heading}
               </h1>
+              <div className="lol-section-divider w-48 mx-auto mb-4" />
               <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-                Thoughts, tutorials, and insights about web development, technology, and software engineering
+                {blogData.subtitle}
               </p>
             </motion.div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {blogPosts.map((post, index) => (
+            {/* Blog Posts Grid - Patch Notes Style */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {blogData.posts.map((post, index) => (
                 <motion.div
                   key={post.slug}
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: index * 0.1 }}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  className="group"
                 >
-                  <Card className="border-0 bg-gradient-to-br from-background/80 to-muted/50 backdrop-blur-sm hover:shadow-xl transition-all duration-500 overflow-hidden h-full flex flex-col">
+                  <div className="relative h-full flex flex-col rounded-sm bg-card/40 border border-gold-dark/20 hover:border-gold/30 hover:shadow-hextech transition-all duration-500 overflow-hidden">
+                    {/* Corner accents */}
+                    <div className="absolute top-0 left-0 w-5 h-5 border-t border-l border-gold/25 z-10" />
+                    <div className="absolute top-0 right-0 w-5 h-5 border-t border-r border-gold/25 z-10" />
+                    
+                    {/* Image */}
                     <div
                       className="h-48 bg-cover bg-center relative"
                       style={{ backgroundImage: `url(${post.image})` }}
                     >
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                      <div className="absolute top-4 left-4">
-                        <Badge variant="secondary" className="bg-black/50 text-white border-white/20">
+                      <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/30 to-transparent" />
+                      <div className="absolute top-3 left-3">
+                        <Badge className="bg-background/60 backdrop-blur-sm text-gold border border-gold-dark/30 text-[10px] uppercase tracking-wider">
                           {post.category}
                         </Badge>
                       </div>
                     </div>
                     
-                    <CardHeader className="flex-grow">
-                      <CardTitle className="text-xl font-bold line-clamp-2 hover:text-primary transition-colors duration-200">
+                    {/* Content */}
+                    <div className="p-5 flex-grow flex flex-col">
+                      <h2 className="text-lg font-heading font-bold text-gold-bright mb-2 line-clamp-2 tracking-wide group-hover:text-gold transition-colors duration-300">
                         {post.title}
-                      </CardTitle>
-                    </CardHeader>
-                    
-                    <CardContent className="space-y-4 pt-0">
-                      <p className="text-muted-foreground text-sm line-clamp-3">
+                      </h2>
+                      
+                      <p className="text-sm text-muted-foreground line-clamp-3 mb-4 flex-grow">
                         {post.excerpt}
                       </p>
                       
-                      <div className="flex items-center justify-between text-xs text-muted-foreground">
-                        <div className="flex items-center gap-2">
-                          <Calendar className="h-3 w-3" />
+                      {/* Meta info */}
+                      <div className="flex items-center justify-between text-xs text-muted-foreground/60 mb-4">
+                        <div className="flex items-center gap-1.5">
+                          <Calendar className="h-3 w-3 text-gold/40" />
                           {new Date(post.date).toLocaleDateString('en-US', {
                             month: 'short',
                             day: 'numeric',
                             year: 'numeric'
                           })}
                         </div>
-                        <div className="flex items-center gap-2">
-                          <Clock className="h-3 w-3" />
+                        <div className="flex items-center gap-1.5">
+                          <Clock className="h-3 w-3 text-gold/40" />
                           {post.readTime}
                         </div>
                       </div>
                       
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="w-full justify-between group hover:bg-primary/5"
-                      >
-                        Read More
-                        <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform duration-200" />
-                      </Button>
-                    </CardContent>
-                  </Card>
+                      {/* Read More */}
+                      <button className="w-full flex items-center justify-between text-sm text-foreground/50 hover:text-gold transition-all duration-300 py-2 border-t border-gold-dark/10 group/btn">
+                        <span className="uppercase tracking-wider text-xs">Read More</span>
+                        <ArrowRight className="h-3.5 w-3.5 group-hover/btn:translate-x-1 transition-transform duration-200" />
+                      </button>
+                    </div>
+                  </div>
                 </motion.div>
               ))}
             </div>
 
+            {/* Coming Soon */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
               className="text-center mt-16"
             >
-              <p className="text-muted-foreground mb-4">
-                More articles coming soon! Stay tuned for insights on modern web development.
+              <div className="lol-section-divider w-32 mx-auto mb-6" />
+              <p className="text-muted-foreground/60 text-sm uppercase tracking-wider">
+                More articles coming soon
               </p>
-              <Button
-                variant="outline"
-                onClick={() => window.location.href = 'mailto:soumojitatrong@gmail.com?subject=Blog Suggestion'}
-              >
-                Suggest a Topic
-              </Button>
             </motion.div>
           </div>
         </section>

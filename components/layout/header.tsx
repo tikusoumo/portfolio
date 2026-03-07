@@ -5,7 +5,11 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ThemeToggle } from '@/components/theme-toggle';
+import { AudioToggle } from '@/components/ui/audio-toggle'; // New import
+import { useGaming } from '@/components/gaming-provider';
+import { useAudio } from '@/components/audio-provider';
 import { cn } from '@/lib/utils';
+import meta from '@/content/meta.json';
 
 const navigation = [
   { name: 'Home', href: '#home' },
@@ -19,6 +23,8 @@ const navigation = [
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { playClick, playHover } = useAudio();
+  const { universe } = useGaming();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -30,6 +36,7 @@ export function Header() {
   }, []);
 
   const scrollToSection = (href: string) => {
+    playClick(); // Play sound
     const element = document.querySelector(href);
     element?.scrollIntoView({ behavior: 'smooth' });
     setIsOpen(false);
@@ -41,31 +48,54 @@ export function Header() {
       animate={{ y: 0 }}
       transition={{ duration: 0.5 }}
       className={cn(
-        'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
+        'fixed top-0 left-0 right-0 z-50 transition-all duration-500',
         scrolled
-          ? 'bg-background/80 backdrop-blur-md border-b border-border/50'
+          ? 'bg-background/95 backdrop-blur-xl border-b border-border shadow-md'
           : 'bg-transparent'
       )}
     >
+      {/* Top accent line */}
+      <div className={cn(
+        "h-[2px]",
+        universe === 'lol' && "bg-gradient-to-r from-transparent via-primary to-transparent shadow-[0_0_10px_hsl(var(--primary))]",
+        universe === 'valorant' && "bg-primary w-full",
+        universe === 'cyberpunk' && "bg-accent shadow-[0_0_8px_hsl(var(--accent))] w-full"
+      )} />
+      
       <nav className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-20"> {/* Taller header like client */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.2 }}
-            className="flex-shrink-0"
+            className="flex-shrink-0 group cursor-pointer"
+            onClick={() => scrollToSection('#home')}
+            onMouseEnter={() => playHover()}
           >
-            <button
-              onClick={() => scrollToSection('#home')}
-              className="text-2xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent"
-            >
-              SD
-            </button>
+            {/* Logo area */}
+            <div className={cn(
+              "relative flex items-center justify-center transition-all duration-300 group-hover:shadow-[0_0_15px_hsl(var(--primary))]",
+              universe === 'lol' ? "w-12 h-12 border-2 border-primary rounded-full bg-background" : 
+              universe === 'valorant' ? "w-12 h-12 bg-primary text-background font-mono clip-path-slant" :
+              "w-12 h-12 border border-accent bg-background shadow-[0_0_10px_hsl(var(--accent))]"
+            )}>
+              <span className={cn(
+                "text-xl font-bold tracking-widest transition-colors duration-300",
+                universe === 'lol' ? "font-heading text-foreground group-hover:text-primary" :
+                universe === 'valorant' ? "text-background" :
+                "font-mono text-accent"
+              )}>
+                {meta.initials}
+              </span>
+            </div>
           </motion.div>
 
           {/* Desktop Navigation */}
           <div className="hidden md:block">
-            <div className="ml-10 flex items-baseline space-x-4">
+            <div className={cn(
+               "ml-10 flex items-center space-x-1 px-4 pb-0",
+               universe === 'lol' && "border-b border-primary/20"
+            )}>
               {navigation.map((item, index) => (
                 <motion.button
                   key={item.name}
@@ -73,15 +103,37 @@ export function Header() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.1 * index }}
                   onClick={() => scrollToSection(item.href)}
-                  className="text-foreground/70 hover:text-foreground px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 hover:bg-accent/50"
+                  onMouseEnter={() => playHover()}
+                  className={cn(
+                     "relative px-6 py-4 uppercase text-sm group overflow-hidden transition-all duration-300",
+                     universe === 'lol' ? "font-heading font-bold text-muted-foreground tracking-wider" :
+                     universe === 'valorant' ? "font-mono font-bold text-muted-foreground hover:bg-primary hover:text-background" :
+                     "font-mono text-muted-foreground hover:text-accent hover:border-b-2 hover:border-accent"
+                  )}
                 >
-                  {item.name}
+                  <span className={cn(
+                     "relative z-10 transition-colors duration-300",
+                     universe === 'lol' && "group-hover:text-foreground"
+                  )}>
+                    {item.name}
+                  </span>
+                  
+                  {universe === 'lol' && (
+                     <>
+                        <div className="absolute inset-0 bg-gradient-to-t from-primary/10 to-transparent translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+                        <div className="absolute bottom-0 left-0 w-full h-[2px] bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-center shadow-[0_0_10px_hsl(var(--primary))]" />
+                     </>
+                  )}
+                  {universe === 'cyberpunk' && (
+                     <div className="absolute inset-x-0 bottom-0 h-[1px] bg-accent translate-y-1 opacity-0 group-hover:opacity-100 group-hover:translate-y-0 transition-all" />
+                  )}
                 </motion.button>
               ))}
             </div>
           </div>
 
           <div className="flex items-center space-x-4">
+            <AudioToggle />
             <ThemeToggle />
             
             {/* Mobile menu button */}
@@ -89,8 +141,11 @@ export function Header() {
               <Button
                 variant="ghost"
                 size="sm"
-                onClick={() => setIsOpen(!isOpen)}
-                className="text-foreground"
+                onClick={() => {
+                  playClick();
+                  setIsOpen(!isOpen);
+                }}
+                className="text-foreground hover:text-primary hover:bg-primary/10"
               >
                 {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
               </Button>
@@ -106,14 +161,14 @@ export function Header() {
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.3 }}
-              className="md:hidden"
+              className="md:hidden overflow-hidden bg-background/95 backdrop-blur-xl border-b border-border"
             >
-              <div className="px-2 pt-2 pb-3 space-y-1 bg-background/95 backdrop-blur-md rounded-lg mt-2 border border-border/50">
+              <div className="px-4 py-4 space-y-2">
                 {navigation.map((item) => (
                   <button
                     key={item.name}
                     onClick={() => scrollToSection(item.href)}
-                    className="text-foreground/70 hover:text-foreground block px-3 py-2 rounded-md text-base font-medium w-full text-left transition-colors duration-200 hover:bg-accent/50"
+                    className="block w-full text-left px-4 py-3 text-muted-foreground hover:text-foreground hover:bg-primary/10 border-l-2 border-transparent hover:border-primary uppercase tracking-wider transition-all duration-200"
                   >
                     {item.name}
                   </button>

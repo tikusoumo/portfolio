@@ -1,0 +1,71 @@
+{
+  "heading": "Experience & Education",
+  "subtitle": "My professional journey, academic background, and key contributions",
+  "experiences": [
+    {
+      "title": "Full Stack Developer - Internship",
+      "company": "CyberPeak IT Solutions Pvt. Ltd.",
+      "period": "Jun 2025 - Feb 2026",
+      "location": "Kolkata, IN",
+      "type": "Internship",
+      "description": [
+        "Optimized data persistence layers by managing containerized PostgreSQL and Nginx instances via Docker.",
+        "Automated environment configuration using Vagrant and Bash, streamlining data pipeline testing.",
+        "Monitored deployment logs to identify system bottlenecks and improve application uptime on VPS.",
+        "Integrated AI-assisted development workflows to accelerate feature delivery and maintain data integrity."
+      ],
+      "technologies": ["PostgreSQL", "Nginx", "Docker", "Vagrant", "Bash"],
+      "image": "/cyberpeak.jpeg"
+    },
+    {
+      "title": "Hack{O}Lution Hackathon winner",
+      "company": "IEM",
+      "period": "June 2025",
+      "location": "IEM Ashram, Kolkata",
+      "type": "Hackathon",
+      "description": [
+        "Won one of the Tracks in Hack{O}Lution Hackathon, creating a RAG pipeline AI agent for tax savings."
+      ],
+      "technologies": ["RAG", "AI"],
+      "image": "/hackolution.jpg"
+    },
+    {
+      "title": "Full Stack Web Developer",
+      "company": "Freelance",
+      "period": "Feb 2022 - Present",
+      "location": "Remote",
+      "type": "Freelance",
+      "description": [
+        "Architected data-intensive web applications for healthcare and e-commerce, focusing on efficient schema design.",
+        "Built scalable APIs with Node.js and Express to handle real-time data synchronization.",
+        "Implemented data-driven features, including recommendation engines and chatbots, to improve user retention."
+      ],
+      "technologies": ["Node.js", "Express", "React", "Next.js"]
+    },
+    {
+      "title": "WebDev Associate",
+      "company": "Google Developer Student Club (GDSC)",
+      "period": "Aug 2023 - Aug 2024",
+      "location": "Narula Institute of Technology",
+      "type": "Extracurricular",
+      "description": [
+        "Analyzed user engagement metrics for event platforms, leading to a 30% increase in participation.",
+        "Led workshops on TensorFlow.js and introductory ML, teaching 100+ students how to build data-driven web apps."
+      ],
+      "technologies": ["TensorFlow.js", "ML", "Web Development"],
+      "image": "/GDSC.jpeg"
+    },
+    {
+      "title": "B.Tech in CSE (Specialization in AI & ML)",
+      "company": "Narula Institute Of Technology",
+      "period": "Sept 2022 - May 2026",
+      "location": "Kolkata, IN",
+      "type": "Education",
+      "description": [
+        "Current academic focus on Computer Science and Engineering with a specialization in Artificial Intelligence and Machine Learning.",
+        "Achieved an 8.08 CGPA."
+      ],
+      "technologies": ["AI", "ML", "Computer Science"]
+    }
+  ]
+}

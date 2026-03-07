@@ -1,132 +1,102 @@
 "use client";
 
 import { motion } from 'framer-motion';
-import { ArrowDown, Github, Instagram, Linkedin, Mail } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Github, Instagram, Linkedin, Mail } from 'lucide-react';
 import { ShaderBackground } from '@/components/three/shader-background';
-import { ContainerTextFlip } from '../ui/container-text-flip';
+import { ContainerTextFlip } from '@/components/ui/container-text-flip';
+import { PlayButton } from '@/components/ui/play-button';
+import { useAudio } from '@/components/audio-provider';
+import { useGaming } from '@/components/gaming-provider';
+import { cn } from '@/lib/utils';
+import hero from '@/content/hero.json';
+import social from '@/content/social.json';
+
+const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
+  Mail,
+  Linkedin,
+  Github,
+  Instagram,
+};
 
 export function Hero() {
-  const scrollToAbout = () => {
-    document.querySelector('#about')?.scrollIntoView({ behavior: 'smooth' });
-  };
+  const { playClick, playHover } = useAudio();
+  const { universe } = useGaming();
 
   return (
-    <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden ">
-      {/* Shader Background */}
-     
+    <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden bg-background transition-colors duration-700">
+      {/* Dynamic Background Shader - Colors update via CSS vars automatically */}
       <ShaderBackground />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-transparent via-transparent to-background/[.05]" />
       
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="text-center">
+      {/* Radial overlay */}
+      <div className={cn(
+        "absolute inset-0 pointer-events-none transition-colors duration-700",
+        universe === 'cyberpunk' ? "bg-[radial-gradient(circle_at_center,transparent_0%,hsl(var(--background))_95%)]" : "bg-[radial-gradient(circle_at_center,transparent_0%,hsl(var(--background))_85%)]"
+      )} />
+      
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 mt-40">
+        <div className="text-center relative">
+          
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="space-y-8 pb-20"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1 }}
+            className="space-y-8 pb-20 relative z-20"
           >
+            {/* Greeting */}
             <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2, duration: 0.8 }}
-              className="text-4xl sm:text-6xl lg:text-7xl font-bold "
+              className="text-5xl sm:text-7xl lg:text-8xl font-heading font-bold tracking-tight drop-shadow-lg mb-10 mx-auto max-w-[90vw]"
             >
-              <span className="block text-foreground/90 pb-2">Hi, I&apos;m</span>
-              <ContainerTextFlip words={["Soumojit Datta","Developer","Designer","3d/2d Artist"]} />
+              <span className={cn(
+                 "block pb-4 text-xl sm:text-2xl uppercase tracking-[0.5em] font-light transition-colors duration-500",
+                 universe === 'lol' ? "text-muted-foreground font-body" : "text-primary/80 font-mono"
+              )}>
+                {hero.greeting}
+              </span>
+              <span className={cn(
+                 "inline-block pb-2 px-4 whitespace-nowrap overflow-hidden transition-all duration-500",
+                 universe === 'lol' && "bg-gradient-to-b from-primary via-primary/80 to-primary/50 bg-clip-text text-transparent transform hover:scale-105",
+                 universe === 'valorant' && "text-foreground glitch-text bg-background/50 px-8 py-2 border-l-4 border-r-4 border-primary uppercase tracking-widest clip-path-slant",
+                 universe === 'cyberpunk' && "text-accent bg-surface/80 px-6 py-2 border-y-2 border-accent uppercase tracking-[0.2em] shadow-[0_0_20px_hsl(var(--accent)/0.3)]"
+              )}>
+                <ContainerTextFlip words={hero.nameVariants} />
+              </span>
             </motion.h1>
             
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4, duration: 0.8 }}
-              className="text-xl sm:text-2xl text-muted-foreground max-w-3xl mx-auto"
-            >
-              Full Stack Web Developer passionate about creating exceptional digital experiences
-              with modern technologies and clean code.
-            </motion.p>
-
+            {/* Play Button CTA */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6, duration: 0.8 }}
-              className="flex flex-wrap justify-center gap-4 mt-8"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.5 }}
+              className="flex justify-center mt-8 pb-10"
             >
-              <Button
-                size="lg"
-                onClick={() => document.querySelector('#projects')?.scrollIntoView({ behavior: 'smooth' })}
-                className="bg-gradient-to-l from-primary to-purple-600 hover:from-primary/90 hover:to-purple-600/90 dark:from-primary/90 dark:to-purple-600/90 text-white px-8 py-3 rounded-full font-bold transition-colors duration-300 backdrop-blur-sm bg-background/10 dark:text-black/80"
+              <PlayButton
+                onClick={() => document.querySelector(hero.ctaPrimary.scrollTo)?.scrollIntoView({ behavior: 'smooth' })}
               >
-                View My Work
-              </Button>
-              
-              <Button
-                size="lg"
-                variant="outline"
-                onClick={() => document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' })}
-                className="px-8 py-3 rounded-full border-2 backdrop-blur-sm bg-background/10"
-              >
-                Get In Touch
-              </Button>
+                {hero.ctaPrimary.text}
+              </PlayButton>
             </motion.div>
 
+            {/* Social Links */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.8, duration: 0.8 }}
-              className="flex justify-center space-x-6 mt-8"
+              className="flex justify-center space-x-8 mt-12"
             >
-              <a
-                href="mailto:soumojitdatta2050@gmail.com"
-                className="text-muted-foreground hover:text-primary transition-colors duration-200"
-                aria-label="Email"
-              >
-                <Mail className="h-6 w-6" />
-              </a>
-              <a
-                href="https://www.linkedin.com/in/soumojit-datta-83629a233/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-primary transition-colors duration-200"
-                aria-label="LinkedIn"
-              >
-                <Linkedin className="h-6 w-6" />
-              </a>
-              <a
-                href="https://github.com/tikusoumo"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-primary transition-colors duration-200"
-                aria-label="GitHub"
-              >
-                <Github className="h-6 w-6" />
-              </a>
-              <a
-                href="https://www.instagram.com/syntax_3d/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-primary transition-colors duration-200"
-                aria-label="Instagram"
-              >
-                <Instagram className="h-6 w-6" />
-              </a>
+              {social.links.map((link) => {
+                const IconComponent = iconMap[link.icon];
+                return (
+                  <a
+                    key={link.name}
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-muted-foreground hover:text-primary transition-all duration-300 hover:drop-shadow-[0_0_5px_hsl(var(--primary)/0.5)] transform hover:scale-110"
+                    onMouseEnter={() => playHover()}
+                    onClick={() => playClick()}
+                  >
+                    {IconComponent && <IconComponent className="h-6 w-6" />}
+                  </a>
+                );
+              })}
             </motion.div>
-          </motion.div>
-
-          {/* Scroll Arrow - Positioned at bottom center with proper spacing */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1, duration: 2 }}
-            className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20"
-          >
-            <button
-              onClick={scrollToAbout}
-              className="animate-bounce text-muted-foreground hover:text-primary transition-colors duration-400 p-2"
-              aria-label="Scroll to about section"
-            >
-              <ArrowDown className="h-6 w-6" />
-            </button>
           </motion.div>
         </div>
       </div>

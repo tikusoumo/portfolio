@@ -1,0 +1,7 @@
+{
+  "greeting": "Hi, I'm",
+  "nameVariants": ["Soumojit Datta", "Developer", "Designer", "3D/2D Artist"],
+  "subtitle": "Full Stack Web Developer passionate about creating exceptional digital experiences with modern technologies and clean code.",
+  "ctaPrimary": { "text": "View My Work", "scrollTo": "#projects" },
+  "ctaSecondary": { "text": "Get In Touch", "scrollTo": "#contact" }
+}

@@ -1,0 +1,19 @@
+{
+  "heading": "Get In Touch",
+  "subtitle": "Have a project in mind or want to collaborate? I'd love to hear from you.",
+  "info": [
+    {
+      "icon": "Mail",
+      "title": "Email",
+      "value": "soumojitdatta2050@gmail.com",
+      "href": "mailto:soumojitdatta2050@gmail.com"
+    },
+    {
+      "icon": "MapPin",
+      "title": "Location",
+      "value": "India",
+      "href": null
+    }
+  ],
+  "formTitle": "Send me a message"
+}
