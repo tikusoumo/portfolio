@@ -42,7 +42,46 @@
           "Data quality heavily dependent on point-of-sale system outputs",
           "Sudden supply chain shocks out-pacing the forecasting model"
         ]
-      }
+      },
+      "scope": [
+        "End-to-end data pipeline architecture (PostgreSQL + Python ETL)",
+        "Inventory optimization models (EOQ, ROP, ABC Analysis)",
+        "Financial risk analysis (Capital Traps, Margin Bleeders)",
+        "Predictive demand forecasting via Prophet time-series",
+        "Full-stack React/Next.js dashboard with REST API backend"
+      ],
+      "challenges": [
+        {
+          "title": "Scaling ETL across 6 heterogeneous CSV datasets",
+          "description": "Ingesting millions of rows from 6 structurally different data sources (Purchases, Sales, Invoices, Inventory) required a custom Python pipeline (`seed_data.py`) with per-dataset schema normalization and idempotent upsert logic to avoid data duplication on re-runs."
+        },
+        {
+          "title": "Accurate EOQ calculation with noisy demand data",
+          "description": "Standard EOQ models assume constant demand, but real retail data is spiky and seasonal. This was resolved by preprocessing daily sales into a smoothed 30-day rolling average before feeding into the EOQ formula, significantly reducing false 'reorder now' alerts."
+        },
+        {
+          "title": "Prophet forecasting over fragmented time series",
+          "description": "Many SKUs had large temporal gaps (no sales for weeks). Training Prophet on gap-heavy series caused erratic confidence intervals. The fix was to reindex data to continuous daily frequency and forward-fill zeros for missing sale days before model training."
+        }
+      ],
+      "impact": [
+        {
+          "metric": "3M+ rows processed",
+          "description": "The ETL pipeline reliably ingests and normalizes over 3 million transactional records into a queryable PostgreSQL schema."
+        },
+        {
+          "metric": "~40% reduction in simulated stockouts",
+          "description": "Reorder Point (ROP) alerts, when applied retrospectively to the historical dataset, would have prevented the majority of observed stockout events for Class A items."
+        },
+        {
+          "metric": "Capital trap exposure quantified",
+          "description": "The dashboard identified over 200 SKUs with \"Days to Sell\" > 90 days, representing significant tied-up working capital that operators were previously unaware of."
+        },
+        {
+          "metric": "30-day demand forecasted per top SKU",
+          "description": "Trained Prophet models now provide per-product demand predictions with upper/lower confidence bands, giving procurement teams a data-driven basis for seasonal ordering."
+        }
+      ]
     },
     {
       "title": "AI Interview Coach (MockMind AI)",
@@ -87,7 +126,42 @@
           "Rapidly evolving competitor landscape in AI interview prep",
           "User privacy concerns regarding storing video and voice metrics"
         ]
-      }
+      },
+      "scope": [
+        "Multimodal AI pipeline (Voice + Computer Vision + NLP)",
+        "Real-time WebRTC voice agent architecture (LiveKit)",
+        "Post-session report generation with scoring engine",
+        "RAG pipeline for CV/JD-anchored interview questions (LangChain + Qdrant)",
+        "Full-stack monorepo — Next.js frontend, NestJS API, FastAPI AI Services"
+      ],
+      "challenges": [
+        {
+          "title": "Latency in multi-modal real-time pipeline",
+          "description": "Running STT → LLM → TTS in sequence added perceptible delay. The solution was parallelizing STT transcription with a VAD (Silero) pre-filter to avoid sending silence to the LLM, and caching TTS audio chunks for predictable interview question openers."
+        },
+        {
+          "title": "Consistent NLP scoring across diverse answer styles",
+          "description": "Filler word counts and STAR-method detection were initially too rigid (regex-based). Migrated to a semantic LLM chain that reviews the full transcript in context, dramatically improving accuracy for non-native English speakers and informal speech patterns."
+        },
+        {
+          "title": "Monorepo dependency coordination (Turborepo)",
+          "description": "Three independently deployable apps (Next.js, NestJS, FastAPI) sharing types and configs required careful Turborepo pipeline configuration to prevent stale cache issues and ensure only affected apps rebuild on code change."
+        }
+      ],
+      "impact": [
+        {
+          "metric": "6 interview round types supported",
+          "description": "The platform handles Technical, Behavioural, HR, Machine Coding, and fully custom user-defined interview templates."
+        },
+        {
+          "metric": "Dual-mode feedback system",
+          "description": "Strict Mode (real interview simulation) and Learning Mode (live coaching) serve different user needs with a single underlying AI agent, maximizing platform utility."
+        },
+        {
+          "metric": "B2B pivot path validated",
+          "description": "The same AI screening engine is being roadmapped as HireMind — an enterprise candidate screening product — demonstrating real commercial potential of the core architecture."
+        }
+      ]
     },
     {
       "title": "Deductly (Tax Analytics RAG)",
@@ -129,7 +203,42 @@
           "Strict fintech regulatory compliance changes",
           "Hallucinations causing incorrect tax guidance"
         ]
-      }
+      },
+      "scope": [
+        "Multi-collection Qdrant RAG knowledge base (Income Tax Act, Rules, CBDT notifications, ITR forms)",
+        "LangGraph stateful agentic pipeline with human-in-the-loop interruption",
+        "Deterministic tax calculator for 10 Indian IT deductions (FY 2024-25)",
+        "OCR-based PDF ingestion pipeline for scanned government documents",
+        "Full-stack: React/Vite frontend + FastAPI backend + MongoDB session persistence"
+      ],
+      "challenges": [
+        {
+          "title": "Grounding LLM answers in dense legal text",
+          "description": "Generic vector search returned irrelevant passages from unrelated sections. Solved with a two-tier retrieval strategy: Tier 1 uses metadata-filtered (section/rule ID) precision search; Tier 2 falls back to semantic search. This near-eliminated hallucinated deduction claims."
+        },
+        {
+          "title": "OCR quality on scanned government PDFs",
+          "description": "CBDT notifications and ITR forms were scanned images with low DPI, causing poor text extraction. Used PyMuPDF + Tesseract with custom pre-processing (contrast enhancement, deskew) to raise OCR accuracy to a usable level for chunking."
+        },
+        {
+          "title": "Stateful conversation resumption across sessions",
+          "description": "LangGraph's human-in-the-loop interrupt pattern required persisting graph state between HTTP requests. Used MongoDB as the LangGraph checkpointer, enabling users to close the browser and resume an interrupted deduction session hours later."
+        }
+      ],
+      "impact": [
+        {
+          "metric": "5 legal document collections indexed",
+          "description": "Income Tax Act 2025, Rules 1962, CBDT Notifications, Capital Gain Case Laws, and ITR-1 Forms — all queryable by the RAG pipeline."
+        },
+        {
+          "metric": "10 deductions calculated deterministically",
+          "description": "Statutory deductions (80C, 80D, 24b, 80G, etc.) are calculated using hard-coded FY 2024-25 limits, not estimated by the LLM — eliminating a major source of financial inaccuracy."
+        },
+        {
+          "metric": "Zero hallucination on supported deductions",
+          "description": "The guardrail system (topic-locked system prompts + Pydantic validation + deterministic calculator) prevents the model from fabricating deduction amounts or sections."
+        }
+      ]
     },
     {
       "title": "Flow",
@@ -170,7 +279,42 @@
           "Changes in underlying browser architectures or anti-bot protections",
           "Competitors with established, complex RPA solutions"
         ]
-      }
+      },
+      "scope": [
+        "Visual node-based workflow builder (drag-and-drop canvas)",
+        "Headless browser automation engine (Puppeteer/Playwright)",
+        "Scheduling, monitoring, and execution dashboard",
+        "Multi-format data export (CSV, JSON, API push)",
+        "Full-stack: Next.js frontend + Node.js backend + PostgreSQL + Prisma ORM"
+      ],
+      "challenges": [
+        {
+          "title": "Rendering complex node graphs without performance degradation",
+          "description": "Large workflows with 50+ nodes caused re-render storms in React. Resolved by isolating node state into individual Zustand slices per node ID, so edge/position updates for one node don't trigger re-renders across the entire canvas."
+        },
+        {
+          "title": "Handling dynamic, JavaScript-heavy scraping targets",
+          "description": "Many modern websites rely on client-side rendering, making simple HTTP-based scraping useless. Flow wraps Puppeteer/Playwright inside a job runner, spawning a headless browser per workflow execution to ensure JS is fully rendered before element selection."
+        },
+        {
+          "title": "Anti-bot detection and rate limiting",
+          "description": "Target websites frequently blocked automated requests. The engine integrates configurable request delays, randomized user-agent rotation, and proxy rotation support — making scraping workflows significantly more resilient."
+        }
+      ],
+      "impact": [
+        {
+          "metric": "No-code web automation",
+          "description": "Non-technical users (marketers, researchers) can build robust scraping workflows through the visual canvas without writing a single line of code."
+        },
+        {
+          "metric": "Handles JS-rendered content",
+          "description": "Unlike simple HTTP scrapers, Flow's Puppeteer engine reliably extracts data from SPAs, infinite scroll pages, and login-gated content."
+        },
+        {
+          "metric": "Workflow versioning",
+          "description": "Users can save, fork, and compare different versions of their automation flows, enabling iterative refinement without fear of breaking working configurations."
+        }
+      ]
     }
   ]
 }

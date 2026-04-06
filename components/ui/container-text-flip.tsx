@@ -29,6 +29,7 @@ export function ContainerTextFlip({
   const id = useId();
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [width, setWidth] = useState(100);
+  const [mounted, setMounted] = useState(false);
   const textRef = React.useRef(null);
   const { universe } = useGaming();
 
@@ -41,19 +42,27 @@ export function ContainerTextFlip({
     }
   };
 
+  // Only start animations after mount
   useEffect(() => {
-    // Update width whenever the word changes
+    setMounted(true);
     updateWidthForWord();
-  }, [currentWordIndex]);
+  }, []);
 
   useEffect(() => {
+    if (!mounted) return;
+    // Update width whenever the word changes
+    updateWidthForWord();
+  }, [currentWordIndex, mounted]);
+
+  useEffect(() => {
+    if (!mounted) return;
     const intervalId = setInterval(() => {
       setCurrentWordIndex((prevIndex) => (prevIndex + 1) % words.length);
       // Width will be updated in the effect that depends on currentWordIndex
     }, interval);
 
     return () => clearInterval(intervalId);
-  }, [words, interval]);
+  }, [words, interval, mounted]);
 
   return (
     <motion.p
@@ -86,17 +95,17 @@ export function ContainerTextFlip({
           {words[currentWordIndex].split("").map((letter, index) => (
             <motion.span
               key={index}
-              initial={{
+              initial={mounted ? {
                 opacity: 0,
                 filter: "blur(10px)",
-              }}
-              animate={{
+              } : undefined}
+              animate={mounted ? {
                 opacity: 1,
                 filter: "blur(0px)",
-              }}
-              transition={{
+              } : undefined}
+              transition={mounted ? {
                 delay: index * 0.02,
-              }}
+              } : undefined}
             >
               {letter}
             </motion.span>

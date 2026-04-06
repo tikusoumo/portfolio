@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useRef } from 'react';
 import useSound from 'use-sound';
 
 interface AudioContextType {
@@ -16,18 +16,53 @@ const AudioContext = createContext<AudioContextType | undefined>(undefined);
 export function AudioProvider({ children }: { children: React.ReactNode }) {
   const [isMuted, setIsMuted] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [soundsLoaded, setSoundsLoaded] = useState(false);
+  const soundsRef = useRef<{
+    playClick?: () => void;
+    playHover?: () => void;
+    playQueuePop?: () => void;
+  }>({});
 
-  // Initialize sounds with volume control
-  // Note: These paths assume files exist in public/sounds/
-  // I will create a setup script to generate/download placeholders if missing
-  const [playClick] = useSound('/sounds/click.mp3', { volume: 0.5, soundEnabled: !isMuted });
-  const [playHover] = useSound('/sounds/hover.mp3', { volume: 0.1, soundEnabled: !isMuted, interrupt: true });
-  const [playQueuePop] = useSound('/sounds/queue-pop.mp3', { volume: 0.6, soundEnabled: !isMuted });
+  // Initialize sounds AFTER first user interaction (lazy loading)
+  const initSounds = () => {
+    if (soundsLoaded) return;
+    
+    // Dynamically require useSound only when needed
+    try {
+      const clickHook = useSound('/sounds/click.mp3', { volume: 0.5, soundEnabled: !isMuted });
+      const hoverHook = useSound('/sounds/hover.mp3', { volume: 0.1, soundEnabled: !isMuted, interrupt: true });
+      const popHook = useSound('/sounds/queue-pop.mp3', { volume: 0.6, soundEnabled: !isMuted });
+      
+      soundsRef.current = {
+        playClick: clickHook[0],
+        playHover: hoverHook[0],
+        playQueuePop: popHook[0],
+      };
+      setSoundsLoaded(true);
+    } catch (e) {
+      console.warn('Failed to load sounds:', e);
+    }
+  };
 
   useEffect(() => {
     setMounted(true);
     const savedMute = localStorage.getItem('lol-portfolio-muted');
     if (savedMute) setIsMuted(JSON.parse(savedMute));
+
+    // Initialize sounds on first user interaction instead of on mount
+    const initOnInteraction = () => {
+      initSounds();
+      document.removeEventListener('click', initOnInteraction);
+      document.removeEventListener('mousemove', initOnInteraction);
+    };
+
+    document.addEventListener('click', initOnInteraction, { once: true });
+    document.addEventListener('mousemove', initOnInteraction, { once: true });
+
+    return () => {
+      document.removeEventListener('click', initOnInteraction);
+      document.removeEventListener('mousemove', initOnInteraction);
+    };
   }, []);
 
   const toggleMute = () => {
@@ -39,8 +74,8 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
   };
 
   // Safe play functions that don't crash if sound fails to load
-  const safePlay = (playFn: () => void) => {
-    if (mounted && !isMuted) {
+  const safePlay = (playFn?: () => void) => {
+    if (mounted && !isMuted && playFn) {
       try {
         playFn();
       } catch (e) {
@@ -51,9 +86,9 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <AudioContext.Provider value={{
-      playClick: () => safePlay(playClick),
-      playHover: () => safePlay(playHover),
-      playQueuePop: () => safePlay(playQueuePop),
+      playClick: () => safePlay(soundsRef.current.playClick),
+      playHover: () => safePlay(soundsRef.current.playHover),
+      playQueuePop: () => safePlay(soundsRef.current.playQueuePop),
       isMuted,
       toggleMute
     }}>

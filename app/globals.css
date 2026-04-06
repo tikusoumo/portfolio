@@ -318,3 +318,10 @@
   background: hsl(var(--primary) / 0.3);
   color: hsl(var(--primary));
 }
+
+/* Performance optimized animations */
+@keyframes slideDown {
+  0% { transform: translateY(-20%); }
+  50% { transform: translateY(0); }
+  100% { transform: translateY(20%); }
+}

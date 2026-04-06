@@ -1,5 +1,6 @@
 "use client";
 
+import Image from 'next/image';
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Badge } from '@/components/ui/badge';
@@ -188,7 +189,14 @@ export function AdminExperience({ initialData, onSave }: { initialData: any, onS
                     <div className="w-full relative z-10 mb-6">
                       {experience.image ? (
                         <div className="w-full h-48 sm:h-64 rounded-md overflow-hidden border border-primary/20 shadow-md relative bg-background/50 group/img flex-shrink-0">
-                          <img src={experience.image} alt={experience.company} className="w-full h-full object-cover" />
+                          <Image 
+                            src={experience.image} 
+                            alt={experience.company} 
+                            fill
+                            sizes="100%"
+                            className="object-cover"
+                            loading="lazy"
+                          />
                           <div className="absolute inset-0 bg-black/50 opacity-0 group-hover/img:opacity-100 flex flex-col items-center justify-center transition-opacity gap-4">
                              <Input
                                value={experience.image || ''}

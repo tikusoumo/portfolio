@@ -1,5 +1,6 @@
 "use client";
 
+import Image from 'next/image';
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Badge } from '@/components/ui/badge';
@@ -157,7 +158,14 @@ export function AdminProjects({ initialData, onSave }: { initialData: any, onSav
                     <div className="w-full md:w-2/5 relative min-h-[200px] border-r border-primary/20 flex flex-col items-center justify-center p-4 bg-black/20 group/img">
                       {project.image ? (
                         <>
-                          <img src={project.image} alt={project.title} className="absolute inset-0 w-full h-full object-cover opacity-50" />
+                          <Image 
+                            src={project.image} 
+                            alt={project.title} 
+                            fill
+                            sizes="100%"
+                            className="object-cover opacity-50"
+                            loading="lazy"
+                          />
                           <div className="absolute inset-0 bg-black/50 opacity-0 group-hover/img:opacity-100 transition-opacity flex items-center justify-center">
                             <Input 
                                value={project.image}

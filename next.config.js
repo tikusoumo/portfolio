@@ -1,10 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   // output: 'export', // Disabled to support Server Actions for CMS
-  eslint: {
-    ignoreDuringBuilds: true,
+  images: { 
+    unoptimized: false, // Enable Next.js image optimization
+    formats: ['image/avif', 'image/webp'],
   },
-  images: { unoptimized: true },
+  compress: true, // Enable gzip compression
+  productionBrowserSourceMaps: false, // Disable source maps in production
 };
 
 module.exports = nextConfig;

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { Badge } from '@/components/ui/badge';
 import { CalendarDays, MapPin } from 'lucide-react';
@@ -108,7 +109,14 @@ export function Experience() {
                     {experience.image && (
                       <div className="w-full h-48 sm:h-64 mb-6 rounded-md overflow-hidden border border-primary/20 shadow-md relative z-10 group/img bg-background/50">
                         <div className="absolute inset-0 bg-primary/10 group-hover/img:bg-transparent transition-colors duration-500 z-10 pointer-events-none" />
-                        <img src={experience.image} alt={experience.company} className="w-full h-full object-cover transform group-hover/img:scale-105 transition-transform duration-700" />
+                        <Image 
+                          src={experience.image} 
+                          alt={experience.company} 
+                          fill
+                          sizes="(max-width: 640px) 90vw, 100%"
+                          className="w-full h-full object-cover transform group-hover/img:scale-105 transition-transform duration-700" 
+                          loading="lazy"
+                        />
                       </div>
                     )}
 

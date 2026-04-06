@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { motion, useMotionValue } from 'framer-motion';
 import { useGaming } from '@/components/gaming-provider';
 
@@ -10,6 +10,7 @@ export function CustomCursor() {
   const [isClicking, setIsClicking] = useState(false);
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
+  const lastCheckTimeRef = useRef(0);
 
   useEffect(() => {
     const updateMousePosition = (e: MouseEvent) => {
@@ -17,11 +18,15 @@ export function CustomCursor() {
       cursorX.set(e.clientX - (universe === 'valorant' ? 16 : 12));
       cursorY.set(e.clientY - (universe === 'valorant' ? 16 : 4));
       
-      // Check for pointer on move too for responsiveness
-      const hoveredElement = document.elementFromPoint(e.clientX, e.clientY);
-      if (hoveredElement) {
-        const computedStyle = window.getComputedStyle(hoveredElement);
-        setIsPointer(computedStyle.cursor === 'pointer');
+      // Throttle elementFromPoint() to every 200ms - prevents massive TBT from mousemove
+      const now = Date.now();
+      if (now - lastCheckTimeRef.current > 200) {
+        lastCheckTimeRef.current = now;
+        const hoveredElement = document.elementFromPoint(e.clientX, e.clientY);
+        if (hoveredElement) {
+          const computedStyle = window.getComputedStyle(hoveredElement);
+          setIsPointer(computedStyle.cursor === 'pointer');
+        }
       }
     };
 
@@ -29,8 +34,8 @@ export function CustomCursor() {
     const handleMouseUp = () => setIsClicking(false);
 
     window.addEventListener('mousemove', updateMousePosition, { passive: true });
-    window.addEventListener('mousedown', handleMouseDown);
-    window.addEventListener('mouseup', handleMouseUp);
+    window.addEventListener('mousedown', handleMouseDown, { passive: true });
+    window.addEventListener('mouseup', handleMouseUp, { passive: true });
 
     return () => {
       window.removeEventListener('mousemove', updateMousePosition);

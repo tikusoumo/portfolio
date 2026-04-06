@@ -1,5 +1,6 @@
 "use client";
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Badge } from '@/components/ui/badge';
@@ -118,7 +119,14 @@ function MissionDossierCard({ project, index, playHover }: { project: Project, i
          {/* Image Reveal */}
          <div className="relative h-48 overflow-hidden">
             <div className="absolute inset-0 bg-primary/20 mix-blend-overlay z-10 group-hover:opacity-0 transition-opacity" />
-            <img src={project.image} alt={project.title} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 scale-105 group-hover:scale-100" />
+            <Image 
+               src={project.image} 
+               alt={project.title} 
+               fill
+               sizes="(max-width: 768px) 90vw, (max-width: 1024px) 45vw, 30vw"
+               className="object-cover grayscale group-hover:grayscale-0 transition-all duration-500 scale-105 group-hover:scale-100" 
+               loading="lazy"
+            />
             <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-background to-transparent" />
          </div>
 
