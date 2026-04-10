@@ -1,7 +1,8 @@
 {
   "greeting": "Hi, I'm",
   "nameVariants": ["Soumojit Datta", "Developer", "Designer", "3D/2D Artist"],
-  "subtitle": "Full Stack Web Developer passionate about creating exceptional digital experiences with modern technologies and clean code.",
+  "subtitle": "Analytical AI Engineer specializing in RAG pipelines, scalable microservices, and multi-agent orchestration to build intelligent automation systems.",
   "ctaPrimary": { "text": "View My Work", "scrollTo": "#projects" },
-  "ctaSecondary": { "text": "Get In Touch", "scrollTo": "#contact" }
+  "ctaSecondary": { "text": "Get In Touch", "scrollTo": "#contact" },
+  "resumeFile": "/Soumojit_Datta_Resume_5_4_26.pdf"
 }

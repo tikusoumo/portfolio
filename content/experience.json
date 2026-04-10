@@ -12,9 +12,12 @@
         "Optimized data persistence layers by managing containerized PostgreSQL and Nginx instances via Docker.",
         "Automated environment configuration using Vagrant and Bash, streamlining data pipeline testing.",
         "Monitored deployment logs to identify system bottlenecks and improve application uptime on VPS.",
-        "Integrated AI-assisted development workflows to accelerate feature delivery and maintain data integrity."
+        "Integrated AI-assisted development workflows to accelerate feature delivery and maintain data integrity.",
+        "Architected an AI-powered booking system and a Discord-style Project Management Tool using FastAPI and LLMs.",
+        "Implemented MCP Servers for tool calling, enabling semantic search and automated task execution.",
+        "Engineered scalable E-commerce solutions with RAG pipelines, backed by PostgreSQL and Docker."
       ],
-      "technologies": ["PostgreSQL", "Nginx", "Docker", "Vagrant", "Bash"],
+      "technologies": ["PostgreSQL", "Nginx", "Docker", "Vagrant", "Bash", "FastAPI", "LLMs", "MCP Servers", "RAG"],
       "image": "/cyberpeak.jpeg"
     },
     {
@@ -38,9 +41,12 @@
       "description": [
         "Architected data-intensive web applications for healthcare and e-commerce, focusing on efficient schema design.",
         "Built scalable APIs with Node.js and Express to handle real-time data synchronization.",
-        "Implemented data-driven features, including recommendation engines and chatbots, to improve user retention."
+        "Implemented data-driven features, including recommendation engines and chatbots, to improve user retention.",
+        "Developed AI microservices and REST APIs for seamless data ingestion and ML model serving.",
+        "Optimized client-facing LLM accuracy using advanced prompt engineering and reranking strategies.",
+        "Architected data-intensive, AI-automated web apps for real-time synchronization and improved user retention."
       ],
-      "technologies": ["Node.js", "Express", "React", "Next.js"]
+      "technologies": ["Node.js", "Express", "React", "Next.js", "AI", "Microservices", "REST APIs", "LLM", "Prompt Engineering"]
     },
     {
       "title": "WebDev Associate",

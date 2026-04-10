@@ -1,0 +1,1 @@
+const fs=require('fs'); const data=JSON.parse(fs.readFileSync('content/projects.json', 'utf8')); data.projects.splice(4, 1); data.projects[data.projects.length - 1].status = 'Completed'; data.projects[data.projects.length - 2].status = 'Completed'; fs.writeFileSync('content/projects.json', JSON.stringify(data, null, 2)); console.log('Done organizing projects.json');

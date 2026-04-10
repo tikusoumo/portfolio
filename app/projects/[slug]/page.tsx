@@ -17,8 +17,6 @@ import {
   ChevronRight,
 } from 'lucide-react';
 import Link from 'next/link';
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
 import { use, useState } from 'react';
 
 type Project = (typeof projectsData.projects)[number] & {
@@ -70,7 +68,7 @@ export default function ProjectCaseStudyPage({
   };
 
   return (
-    <div className="min-h-screen bg-background flex flex-col pt-16">
+    <div className="min-h-screen bg-background flex flex-col pt-[80px]">
       <Header />
       <main className="flex-1 container mx-auto px-4 py-12 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
@@ -140,7 +138,7 @@ export default function ProjectCaseStudyPage({
           </div>
 
           {/* ── Sticky Tab Bar ─────────────────────────────────────── */}
-          <div className="sticky top-16 z-30 bg-background/80 backdrop-blur-md border-b border-border mb-10">
+          <div className="sticky top-[80px] z-30 bg-background/80 backdrop-blur-md border-b border-border mb-10">
             <nav className="flex gap-0 overflow-x-auto scrollbar-hide">
               {TABS.map(({ id, label, icon: Icon }) => {
                 const hasContent =
@@ -239,7 +237,7 @@ export default function ProjectCaseStudyPage({
                 {project.challenges.map((c, i) => (
                   <div
                     key={i}
-                    className="group rounded-xl border border-border bg-card p-6 hover:border-amber-500/30 hover:shadow-[0_0_20px_rgba(245,158,11,0.06)] transition-all"
+                    className="group rounded-xl border border-border bg-secondary/20 p-6 hover:border-amber-500/30 hover:shadow-[0_0_20px_rgba(245,158,11,0.06)] transition-all"
                   >
                     <div className="flex items-start gap-4">
                       <span className="shrink-0 w-8 h-8 rounded-full bg-amber-500/10 text-amber-500 text-sm font-bold flex items-center justify-center border border-amber-500/20">
@@ -400,28 +398,26 @@ export default function ProjectCaseStudyPage({
             </section>
           )}
 
-          {/* ── Deep Dive (collapsed README) ────────────────────────── */}
-          {project.caseStudy && (
-            <details className="group mb-16 rounded-xl border border-border bg-card overflow-hidden">
-              <summary className="flex items-center justify-between cursor-pointer p-6 select-none hover:bg-secondary/20 transition-colors">
+          {/* ── Deep Dive (Redirect to GitHub) ────────────────────────── */}
+            {project.githubUrl && (
+              <a
+                href={project.githubUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group mb-16 flex items-center justify-between p-6 rounded-xl border border-primary/50 bg-secondary/20 transition-all cursor-pointer box-border"
+              >
                 <div className="flex items-center gap-3">
-                  <BookOpen className="w-5 h-5 text-muted-foreground" />
-                  <span className="text-base font-semibold text-foreground">
+                  <BookOpen className="w-5 h-5 text-white" />
+                  <span className="text-base font-semibold text-white">
                     Full Technical Documentation
                   </span>
                   <Badge variant="secondary" className="text-xs">
-                    README
+                    GitHub
                   </Badge>
                 </div>
-                <ChevronRight className="w-4 h-4 text-muted-foreground group-open:rotate-90 transition-transform" />
-              </summary>
-              <div className="px-6 pb-8 pt-2 border-t border-border prose prose-invert prose-sm max-w-none text-muted-foreground">
-                <ReactMarkdown remarkPlugins={[remarkGfm as any]}>
-                  {project.caseStudy}
-                </ReactMarkdown>
-              </div>
-            </details>
-          )}
+                <ExternalLink className="w-4 h-4 text-white transition-colors" />
+              </a>
+            )}
         </div>
       </main>
       <Footer />

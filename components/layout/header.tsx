@@ -10,6 +10,7 @@ import { useGaming } from '@/components/gaming-provider';
 import { useAudio } from '@/components/audio-provider';
 import { cn } from '@/lib/utils';
 import meta from '@/content/meta.json';
+import { usePathname, useRouter } from 'next/navigation';
 
 const navigation = [
   { name: 'Home', href: '#home' },
@@ -25,6 +26,8 @@ export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const { playClick, playHover } = useAudio();
   const { universe } = useGaming();
+  const pathname = usePathname();
+  const router = useRouter();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -37,9 +40,13 @@ export function Header() {
 
   const scrollToSection = (href: string) => {
     playClick(); // Play sound
+    setIsOpen(false);
+    if (pathname !== '/') {
+      router.push(`/${href}`);
+      return;
+    }
     const element = document.querySelector(href);
     element?.scrollIntoView({ behavior: 'smooth' });
-    setIsOpen(false);
   };
 
   return (

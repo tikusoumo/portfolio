@@ -4,11 +4,13 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Badge } from '@/components/ui/badge';
-import { ExternalLink, Github, Lock, Unlock, Crosshair } from 'lucide-react';
+import { ExternalLink, Github, Lock, Unlock, Crosshair, Play, FileCode2 } from 'lucide-react';
 import { useAudio } from '@/components/audio-provider';
 import { useGaming } from '@/components/gaming-provider';
 import { cn } from '@/lib/utils';
 import projectsData from '@/content/projects.json';
+import { useRef } from 'react';
+import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 
 // Define Project Interface
 interface Project {
@@ -24,6 +26,7 @@ interface Project {
   github?: string;
   slug?: string;
   caseStudy?: string;
+  video?: string;
 }
 
 export function Projects() {
@@ -60,31 +63,123 @@ export function Projects() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {projectsData.projects.map((project: any, index: number) => {
-             if (universe === 'valorant' || universe === 'cyberpunk') {
+             if (universe === 'valorant') {
                 return (
-                  <MissionDossierCard 
-                    key={project.title} 
-                    project={project} 
-                    index={index} 
-                    playHover={playHover} 
-                    playClick={playClick} 
+                  <MissionDossierCard
+                    key={project.title}
+                    project={project}
+                    index={index}
+                    playHover={playHover}
+                    playClick={playClick}
                   />
                 );
              }
-             // Default / LoL
+             if (universe === 'cyberpunk') {
+                return (
+                  <CyberpunkCard
+                    key={project.title}
+                    project={project}
+                    index={index}
+                    playHover={playHover}
+                    playClick={playClick}
+                  />
+                )
+             }
+             // Default / LoL / neutral
              return (
-               <HextechChestCard 
-                 key={project.title} 
-                 project={project} 
-                 index={index} 
-                 playHover={playHover} 
-                 playClick={playClick} 
+               <HextechChestCard
+                 key={project.title}
+                 project={project}
+                 index={index}
+                 playHover={playHover}
+                 playClick={playClick}
                />
              );
           })}
         </div>
       </div>
     </section>
+  );
+}
+
+// ==========================================
+// THEME: CYBERPUNK (Neon Netrunner)
+// ==========================================
+function CyberpunkCard({ project, index, playHover }: { project: Project, index: number, playHover: () => void, playClick: () => void }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, scale: 0.95 }}
+      whileInView={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.4, delay: index * 0.1 }}
+      viewport={{ once: true }}
+      className="group relative h-[500px] bg-black border border-yellow-500/30 overflow-hidden flex flex-col"
+      onMouseEnter={() => playHover()}
+    >
+      {/* Glitch Overlay Effect */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,black_100%)] pointer-events-none z-20" />
+      
+      {/* Top Bar - Neon Aesthetic */}
+      <div className="flex items-center justify-between p-3 border-b border-yellow-500/20 bg-yellow-500/10 z-30 relative">
+         <span className="text-[10px] font-mono text-yellow-400 tracking-wider">
+            // SYS.ARCHIVE.{index + 1}
+         </span>
+         <Badge variant="outline" className="border-cyan-400 text-cyan-400 text-[9px] uppercase rounded-none tracking-widest bg-cyan-400/10">
+            {project.category}
+         </Badge>
+      </div>
+
+      <div className="p-0 flex-grow flex flex-col relative z-30">
+         {/* Media Reveal */}
+         <div className="relative h-56 overflow-hidden border-b border-yellow-500/20 bg-zinc-900 z-10">
+            <ProjectMedia project={project}>
+               <div className="absolute inset-0 bg-yellow-500/10 mix-blend-color z-10 group-hover:opacity-0 transition-opacity pointer-events-none" />
+               <div className="absolute top-0 left-0 w-full h-full bg-[linear-gradient(rgba(0,255,255,0.05)_1px,transparent_1px)] bg-[size:100%_4px] pointer-events-none z-10" />
+            </ProjectMedia>
+         </div>
+
+         <div className="p-5 flex-grow flex flex-col bg-black/80 backdrop-blur-md">
+            <h3 className="text-xl font-bold font-mono text-yellow-400 tracking-wider uppercase mb-1 drop-shadow-[0_0_5px_rgba(234,179,8,0.5)]">
+               {project.title}
+            </h3>
+            
+            <div className="flex flex-wrap gap-2 mb-4">
+              {project.technologies?.slice(0, 3).map((tech) => (
+                <span key={tech} className="text-[9px] font-mono text-pink-500 bg-pink-500/10 px-1 border border-pink-500/30">
+                  {tech}
+                </span>
+              ))}
+            </div>
+
+            <p className="text-xs text-zinc-400 line-clamp-3 mb-6 font-mono">
+               {project.description}
+            </p>
+
+            <div className="flex items-center justify-between mt-auto pointer-events-auto flex-wrap gap-y-3">
+               <div className="flex gap-3">
+                  {project.githubUrl && (
+                    <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="text-yellow-500 hover:text-cyan-400 hover:scale-110 transition-all pointer-events-auto z-40 shrink-0 inline-block">
+                       <Github className="w-5 h-5" />
+                    </a>
+                  )}
+                  {project.demoUrl && (
+                    <a href={project.demoUrl} target="_blank" rel="noopener noreferrer" className="text-yellow-500 hover:text-cyan-400 hover:scale-110 transition-all pointer-events-auto z-40 shrink-0 inline-block">
+                       <ExternalLink className="w-5 h-5" />
+                    </a>
+                  )}
+               </div>
+               {project.slug && (
+                 <Link href={`/projects/${project.slug}`} className="text-[11px] font-bold font-mono text-black bg-yellow-500 hover:bg-cyan-400 px-3 py-1 uppercase tracking-widest transition-colors pointer-events-auto z-40 shrink-0 inline-block">
+                   [READ_FILE]
+                 </Link>
+               )}
+            </div>
+         </div>
+      </div>
+      
+      {/* Corner Accents */}
+      <div className="absolute top-0 left-0 w-2 h-2 border-t-2 border-l-2 border-cyan-400 z-40" />
+      <div className="absolute bottom-0 right-0 w-2 h-2 border-b-2 border-r-2 border-cyan-400 z-40" />
+    </motion.div>
   );
 }
 
@@ -98,7 +193,7 @@ function MissionDossierCard({ project, index, playHover }: { project: Project, i
       whileInView={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.4, delay: index * 0.1 }}
       viewport={{ once: true }}
-      className="group relative h-[450px] bg-background/90 border-l-4 border-primary overflow-hidden"
+      className="group relative h-[500px] bg-background/90 border-l-4 border-primary overflow-hidden flex flex-col"
       onMouseEnter={() => playHover()}
     >
       {/* Background Grip */}
@@ -115,45 +210,43 @@ function MissionDossierCard({ project, index, playHover }: { project: Project, i
       </div>
 
       {/* Content Container */}
-      <div className="p-0 h-full flex flex-col">
+      <div className="p-0 flex-grow flex flex-col relative z-20">
          {/* Image Reveal */}
-         <div className="relative h-48 overflow-hidden">
-            <div className="absolute inset-0 bg-primary/20 mix-blend-overlay z-10 group-hover:opacity-0 transition-opacity" />
-            <Image 
-               src={project.image} 
-               alt={project.title} 
-               fill
-               sizes="(max-width: 768px) 90vw, (max-width: 1024px) 45vw, 30vw"
-               className="object-cover grayscale group-hover:grayscale-0 transition-all duration-500 scale-105 group-hover:scale-100" 
-               loading="lazy"
-            />
-            <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-background to-transparent" />
+         <div className="relative h-48 overflow-hidden z-10">
+            <ProjectMedia project={project}>
+               <div className="absolute inset-0 bg-primary/20 mix-blend-overlay z-10 group-hover:opacity-0 transition-opacity pointer-events-none" />
+               <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-background to-transparent z-10 pointer-events-none" />
+            </ProjectMedia>
          </div>
 
-         <div className="p-6 -mt-12 relative z-20">
+         <div className="p-6 -mt-12 relative z-20 pointer-events-none flex-grow flex flex-col">
             <h3 className="text-2xl font-bold font-mono text-foreground uppercase mb-2 group-hover:text-primary transition-colors">
                {project.title}
             </h3>
             <div className="flex items-center gap-2 mb-4 text-xs font-mono text-muted-foreground">
                <span>STATUS:</span>
-               <span className="text-green-500">COMPLETED</span>
+               <span className="text-green-500">ONGOING</span>
             </div>
             
             <p className="text-sm text-muted-foreground line-clamp-3 mb-6 font-mono border-l-2 border-muted pl-4">
                {project.description}
             </p>
 
-            <div className="flex items-center justify-between mt-auto">
+            <div className="flex items-center justify-between mt-auto pointer-events-auto flex-wrap gap-y-3">
                <div className="flex gap-2">
-                  <a href={project.githubUrl} className="p-2 bg-secondary hover:bg-primary hover:text-background transition-colors">
-                     <Github className="w-4 h-4" />
-                  </a>
-                  <a href={project.demoUrl} className="p-2 bg-secondary hover:bg-primary hover:text-background transition-colors">
-                     <ExternalLink className="w-4 h-4" />
-                  </a>
+                  {project.githubUrl && (
+                    <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="p-2 bg-secondary hover:bg-primary hover:text-background transition-colors pointer-events-auto z-30">
+                       <Github className="w-4 h-4" />
+                    </a>
+                  )}
+                  {project.demoUrl && (
+                    <a href={project.demoUrl} target="_blank" rel="noopener noreferrer" className="p-2 bg-secondary hover:bg-primary hover:text-background transition-colors pointer-events-auto z-30">
+                       <ExternalLink className="w-4 h-4" />
+                    </a>
+                  )}
                </div>
                {project.slug ? (
-                 <Link href={`/projects/${project.slug}`} className="text-[10px] font-mono text-primary hover:underline uppercase flex items-center gap-1">
+                 <Link href={`/projects/${project.slug}`} className="text-[10px] font-mono text-primary hover:underline uppercase flex items-center gap-1 pointer-events-auto z-30 relative bg-background/50 px-2 py-1 rounded shrink-0">
                    Case Study <ExternalLink className="w-3 h-3" />
                  </Link>
                ) : (
@@ -176,7 +269,7 @@ function HextechChestCard({ project, index, playHover, playClick }: { project: P
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay: index * 0.1 }}
       viewport={{ once: true }}
-      className="group relative h-[450px] perspective-1000"
+      className="group relative h-[500px] perspective-1000"
       onMouseEnter={() => playHover()}
     >
       <div className="relative w-full h-full duration-700 preserve-3d group-hover:my-rotate-y-180">
@@ -209,16 +302,18 @@ function HextechChestCard({ project, index, playHover, playClick }: { project: P
         {/* Content (Open State / Back) */}
         <div className="absolute inset-0 h-full w-full backface-hidden my-rotate-y-180 bg-[#1e2328] border border-[#c8aa6e]/50 shadow-[0_0_30px_hsl(var(--primary)/0.15)] overflow-hidden flex flex-col">
            {/* Image Background with Overlay */}
-           <div className="h-40 bg-cover bg-center relative shrink-0" style={{ backgroundImage: `url(${project.image})` }}>
-              <div className="absolute inset-0 bg-gradient-to-t from-[#1e2328] via-[#1e2328]/50 to-transparent" />
-              <div className="absolute top-2 right-2">
-                <Badge className="bg-[#010a13]/80 border border-[#c8aa6e]/30 text-[#c8aa6e] text-[10px] uppercase tracking-wider backdrop-blur-sm">
-                  {project.category}
-                </Badge>
-              </div>
+           <div className="h-40 relative shrink-0">
+             <ProjectMedia project={project}>
+                <div className="absolute inset-0 bg-gradient-to-t from-[#1e2328] via-[#1e2328]/50 to-transparent pointer-events-none z-10" />
+                <div className="absolute top-2 right-2 z-30">
+                  <Badge className="bg-[#010a13]/80 border border-[#c8aa6e]/30 text-[#c8aa6e] text-[10px] uppercase tracking-wider backdrop-blur-sm pointer-events-auto">
+                    {project.category}
+                  </Badge>
+                </div>
+             </ProjectMedia>
            </div>
 
-           <div className="p-6 flex flex-col flex-grow">
+           <div className="p-6 flex flex-col flex-grow z-20 pointer-events-auto">
               <div className="flex items-start justify-between mb-2">
                 <h3 className="text-lg font-heading font-bold text-[#f0e6d2] tracking-wide leading-tight">
                   {project.title}
@@ -230,17 +325,21 @@ function HextechChestCard({ project, index, playHover, playClick }: { project: P
                 {project.description}
               </p>
 
-              <div className="mt-auto flex items-center justify-between">
+              <div className="mt-auto flex items-center justify-between flex-wrap gap-y-3">
                  <div className="flex gap-4">
-                    <a href={project.githubUrl} target="_blank" className="text-[#a09b8c] hover:text-[#c8aa6e] transition-colors">
-                       <Github className="w-5 h-5" />
-                    </a>
-                    <a href={project.demoUrl} target="_blank" className="text-[#a09b8c] hover:text-[#c8aa6e] transition-colors">
-                       <ExternalLink className="w-5 h-5" />
-                    </a>
+                    {project.githubUrl && (
+                      <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="text-[#a09b8c] hover:text-[#c8aa6e] transition-colors">
+                         <Github className="w-5 h-5" />
+                      </a>
+                    )}
+                    {project.demoUrl && (
+                      <a href={project.demoUrl} target="_blank" rel="noopener noreferrer" className="text-[#a09b8c] hover:text-[#c8aa6e] transition-colors">
+                         <ExternalLink className="w-5 h-5" />
+                      </a>
+                    )}
                  </div>
                  {project.slug && (
-                    <Link href={`/projects/${project.slug}`} className="text-xs font-heading text-[#c8aa6e] hover:text-[#f0e6d2] uppercase transition-colors tracking-widest pl-4">
+                    <Link href={`/projects/${project.slug}`} className="text-xs font-heading text-[#c8aa6e] hover:text-[#f0e6d2] uppercase transition-colors tracking-widest pl-4 shrink-0 whitespace-nowrap">
                        Read Case Study
                     </Link>
                  )}
@@ -249,5 +348,74 @@ function HextechChestCard({ project, index, playHover, playClick }: { project: P
         </div>
       </div>
     </motion.div>
+  );
+}
+
+/* ── Media Component ──────────────────────────────────────────── */
+function ProjectMedia({ project, className, children }: { project: Project, className?: string, children?: React.ReactNode }) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  const handleMouseEnter = () => {
+    if (videoRef.current) {
+      videoRef.current.play().catch(() => {});
+    }
+  };
+
+  const handleMouseLeave = () => {
+    if (videoRef.current) {
+      videoRef.current.pause();
+    }
+  };
+
+  return (
+    <Dialog>
+      <div 
+        className={cn("w-full h-full relative cursor-pointer group/vid overflow-hidden", className)}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      >
+        {project.video ? (
+          <>
+            <video 
+              ref={videoRef}
+              src={project.video} 
+              poster={project.image}
+              muted 
+              loop 
+              playsInline
+              className="absolute inset-0 w-full h-full object-cover transition-all duration-500 scale-105 group-hover/vid:scale-100"
+            />
+            <DialogTrigger asChild>
+              <div className="absolute inset-0 flex flex-col items-center justify-center opacity-0 group-hover/vid:opacity-100 transition-opacity bg-black/40 z-20">
+                <div className="w-12 h-12 rounded-full bg-primary/90 flex items-center justify-center text-primary-foreground transform scale-75 group-hover/vid:scale-100 transition-all hover:bg-primary hover:scale-110">
+                  <Play className="w-5 h-5 ml-1" />
+                </div>
+              </div>
+            </DialogTrigger>
+          </>
+        ) : (
+          <Image 
+             src={project.image} 
+             alt={project.title} 
+             fill
+             sizes="(max-width: 768px) 90vw, (max-width: 1024px) 45vw, 30vw"
+             className="absolute inset-0 object-cover grayscale group-hover/vid:grayscale-0 transition-all duration-500 scale-105 group-hover/vid:scale-100" 
+             loading="lazy"
+          />
+        )}
+        {children}
+      </div>
+
+      {project.video && (
+        <DialogContent className="max-w-[1000px] w-[90vw] p-0 border-none bg-black/95 overflow-hidden">
+          <video 
+            src={project.video} 
+            controls 
+            autoPlay 
+            className="w-full h-auto max-h-[85vh]"
+          />
+        </DialogContent>
+      )}
+    </Dialog>
   );
 }

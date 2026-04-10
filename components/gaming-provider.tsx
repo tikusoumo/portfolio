@@ -105,7 +105,7 @@ interface GamingContextType {
 const GamingContext = createContext<GamingContextType | undefined>(undefined);
 
 export function GamingProvider({ children }: { children: React.ReactNode }) {
-  const [universe, setUniverse] = useState<ThemeUniverse>('lol');
+  const [universe, setUniverse] = useState<ThemeUniverse>('valorant');
 
   useEffect(() => {
     // Helper to convert hex to HSL for shadcn compatibility

@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { Github, Instagram, Linkedin, Mail } from 'lucide-react';
 import { OptimizedBackground } from '@/components/three/optimized-background';
+import { PretextBackground } from '@/components/three/pretext-background';
 import { ContainerTextFlip } from '@/components/ui/container-text-flip';
 import { PlayButton } from '@/components/ui/play-button';
 import { useAudio } from '@/components/audio-provider';
@@ -34,7 +35,8 @@ export function Hero() {
     <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden bg-background transition-colors duration-700">
       {/* Optimized CSS-based background for better performance */}
       <OptimizedBackground />
-      
+      <PretextBackground />
+
       {/* Radial overlay */}
       <div className={cn(
         "absolute inset-0 pointer-events-none transition-colors duration-700",
@@ -59,9 +61,9 @@ export function Hero() {
               </span>
               <span className={cn(
                  "inline-block pb-2 px-4 whitespace-nowrap overflow-hidden transition-all duration-500",
-                 universe === 'lol' && "bg-gradient-to-b from-primary via-primary/80 to-primary/50 bg-clip-text text-transparent transform hover:scale-105",
-                 universe === 'valorant' && "text-foreground glitch-text bg-background/50 px-8 py-2 border-l-4 border-r-4 border-primary uppercase tracking-widest clip-path-slant",
-                 universe === 'cyberpunk' && "text-accent bg-surface/80 px-6 py-2 border-y-2 border-accent uppercase tracking-[0.2em] shadow-[0_0_20px_hsl(var(--accent)/0.3)]"
+                 universe === 'lol' && "text-white transform hover:scale-105",
+                 universe === 'valorant' && "text-white glitch-text bg-background/50 px-8 py-2 border-l-4 border-r-4 border-primary uppercase tracking-widest clip-path-slant",
+                 universe === 'cyberpunk' && "text-white bg-surface/80 px-6 py-2 border-y-2 border-accent uppercase tracking-[0.2em] shadow-[0_0_20px_hsl(var(--accent)/0.3)]"
               )}>
                 {showAnimations ? (
                   <ContainerTextFlip words={hero.nameVariants} />
@@ -72,12 +74,20 @@ export function Hero() {
             </h1>
             
             {/* Play Button CTA - No animation on first render */}
-            <div className="flex justify-center mt-8 pb-10">
+            <div className="flex flex-col sm:flex-row justify-center mt-8 pb-10 gap-6">
               <PlayButton
                 onClick={() => document.querySelector(hero.ctaPrimary.scrollTo)?.scrollIntoView({ behavior: 'smooth' })}
               >
                 {hero.ctaPrimary.text}
               </PlayButton>
+              
+              {hero.resumeFile && (
+                <a href={hero.resumeFile} download className="flex items-center justify-center">
+                  <PlayButton className="w-full">
+                    Download Resume
+                  </PlayButton>
+                </a>
+              )}
             </div>
 
             {/* Social Links */}

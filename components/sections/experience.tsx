@@ -59,7 +59,7 @@ export function Experience() {
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: index * 0.15 }}
                 viewport={{ once: true }}
-                className={`relative flex flex-col md:flex-row gap-6 ${
+                className={`relative flex flex-col md:flex-row ${
                   index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
                 }`}
               >
@@ -77,13 +77,13 @@ export function Experience() {
                 </div>
 
                 {/* Spacer for alignment */}
-                <div className="md:w-1/2" />
+                <div className="md:w-1/2 hidden md:block" />
                 
                 {/* Card */}
-                <div className="md:w-1/2 group">
+                <div className={cn("md:w-1/2 group", index % 2 === 0 ? "md:pl-12" : "md:pr-12")}>
                   <div className={cn(
                      "relative p-6 transition-all duration-500 overflow-hidden",
-                     universe === 'lol' && "rounded-sm bg-card/40 border border-primary/20 hover:border-primary/40 hover:shadow-[0_0_20px_hsl(var(--primary)/0.2)]",
+                     universe === 'lol' && "rounded-sm bg-[#091428]/90 border border-primary/20 hover:border-primary/40 hover:shadow-[0_0_20px_hsl(var(--primary)/0.2)]",
                      universe === 'valorant' && "bg-background/80 border border-primary/30 hover:border-primary clip-path-slant grayscale-[0.5] hover:grayscale-0",
                      universe === 'cyberpunk' && "bg-surface/50 border border-accent/30 hover:border-accent hover:shadow-[0_0_30px_hsl(var(--accent)/0.2)] clip-path-cyber"
                   )}>
@@ -100,7 +100,7 @@ export function Experience() {
                     {/* Hover glow */}
                     <div className={cn(
                        "absolute inset-0 opacity-0 transition-opacity duration-500",
-                       universe === 'lol' && "bg-gradient-to-br from-primary/[0.05] to-transparent group-hover:opacity-100",
+                       universe === 'lol' && "bg-primary/5 to-transparent group-hover:opacity-100",
                        universe === 'valorant' && "bg-primary/5 group-hover:opacity-100",
                        universe === 'cyberpunk' && "bg-accent/5 group-hover:opacity-100 pointer-events-none"
                     )} />
@@ -122,7 +122,7 @@ export function Experience() {
 
                     {/* Header */}
                     <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-4 relative z-10">
-                      <div>
+                      <div className="flex-1">
                         <h3 className={cn(
                            "text-lg font-semibold tracking-wide transition-colors",
                            universe === 'lol' && "font-heading text-primary group-hover:text-primary",
@@ -140,14 +140,14 @@ export function Experience() {
                           {experience.company}
                         </p>
                       </div>
-                      <div className="flex flex-col items-start sm:items-end gap-1.5 relative z-10">
-                        <div className="flex items-center gap-2 text-xs text-muted-foreground font-mono">
-                          <CalendarDays className={cn("h-3.5 w-3.5", universe === 'cyberpunk' ? "text-accent" : "text-primary/70")} />
-                          {experience.period}
+                      <div className="flex flex-col items-start sm:items-end gap-1.5 relative z-10 flex-shrink-0 mt-2 sm:mt-0">
+                        <div className="flex items-start gap-2 text-xs text-muted-foreground font-mono">
+                          <CalendarDays className={cn("h-3.5 w-3.5 flex-shrink-0 mt-[2px]", universe === 'cyberpunk' ? "text-accent" : "text-primary/70")} />
+                          <span className="whitespace-nowrap sm:text-right">{experience.period}</span>
                         </div>
-                        <div className="flex items-center gap-2 text-xs text-muted-foreground font-mono">
-                          <MapPin className={cn("h-3.5 w-3.5", universe === 'cyberpunk' ? "text-accent" : "text-primary/70")} />
-                          {experience.location}
+                        <div className="flex items-start gap-2 text-xs text-muted-foreground font-mono">
+                          <MapPin className={cn("h-3.5 w-3.5 flex-shrink-0 mt-[2px]", universe === 'cyberpunk' ? "text-accent" : "text-primary/70")} />
+                          <span className="sm:text-right whitespace-nowrap">{experience.location}</span>
                         </div>
                         <Badge variant="outline" className={cn(
                            "text-[10px] uppercase tracking-wider",
@@ -171,7 +171,7 @@ export function Experience() {
                           )}
                           <p className={cn(
                              "text-sm leading-relaxed",
-                             universe === 'lol' ? "text-muted-foreground" : "text-foreground font-mono opacity-80"
+                             universe === 'lol' ? "text-foreground/85" : "text-foreground font-mono opacity-80"
                           )}>{item}</p>
                         </li>
                       ))}
