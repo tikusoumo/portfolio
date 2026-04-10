@@ -83,7 +83,10 @@ export default function ProjectCaseStudyPage({
 
           {/* ── Hero Header ─────────────────────────────────────────── */}
           <div className="mb-10">
-            <div className="flex items-center gap-3 mb-4">
+            <h1 className="text-4xl md:text-5xl font-bold font-heading mb-4 leading-tight">
+              {project.title}
+            </h1>
+            <div className="flex items-center gap-3 mb-6">
               <Badge
                 variant="outline"
                 className="border-primary text-primary uppercase tracking-widest text-xs"
@@ -92,10 +95,7 @@ export default function ProjectCaseStudyPage({
               </Badge>
               <Badge variant="secondary">{project.status}</Badge>
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold font-heading mb-4 leading-tight">
-              {project.title}
-            </h1>
-            <p className="text-lg text-muted-foreground mb-6 max-w-2xl">
+            <p className="text-lg text-muted-foreground mb-4 max-w-2xl">
               {project.description}
             </p>
 

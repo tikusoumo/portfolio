@@ -16,20 +16,50 @@ export function PretextBackground() {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    let width = window.innerWidth;
-    let height = window.innerHeight;
+    let width = typeof window !== 'undefined' ? window.innerWidth : 1000;
+    let height = typeof window !== 'undefined' ? window.innerHeight : 800;
+    let isMobile = width < 768;
     
     const dpr = window.devicePixelRatio || 1;
     
+    // We'll declare these let vars so we can rebuild pretext on resize if needed
+    let fontSize = isMobile ? 14 : 24;
+    let lineHeight = isMobile ? 24 : 40;
+    let fontStr = `bold ${fontSize}px 'Inter', system-ui, sans-serif`;
+    let prepared: any;
+
+    const buildPretext = () => {
+      let baseText = "DEVELOPER DESIGNER SOFTWARE ENGINEER CREATIVE THINKER ARCHITECT PROBLEM SOLVER CODING ARTIST FULL STACK FRONTEND BACKEND ";
+      let textToLayout = baseText;
+      for (let i=0; i<60; i++) textToLayout += baseText;
+      
+      fontStr = `bold ${fontSize}px 'Inter', system-ui, sans-serif`;
+      if (universe === 'lol') fontStr = `bold ${fontSize}px 'Georgia', serif`;
+      if (universe === 'cyberpunk') fontStr = `bold ${fontSize}px 'Courier New', monospace`;
+      if (universe === 'valorant') fontStr = `bold ${fontSize}px 'Arial', sans-serif`;
+
+      prepared = prepareWithSegments(textToLayout, fontStr);
+    };
+
     const handleResize = () => {
       width = window.innerWidth;
       height = window.innerHeight;
+      
+      const newIsMobile = width < 768;
+      if (newIsMobile !== isMobile) {
+         isMobile = newIsMobile;
+         fontSize = isMobile ? 14 : 24;
+         lineHeight = isMobile ? 24 : 40;
+         buildPretext();
+      }
+
       canvas.width = width * dpr;
       canvas.height = height * dpr;
       canvas.style.width = width + 'px';
       canvas.style.height = height + 'px';
       ctx.scale(dpr, dpr);
     };
+    buildPretext();
     handleResize();
     
     let mouseX = -1000;
@@ -42,31 +72,38 @@ export function PretextBackground() {
     
     window.addEventListener('mousemove', handleMouseMove);
 
-    const baseText = "DEVELOPER DESIGNER SOFTWARE ENGINEER CREATIVE THINKER ARCHITECT PROBLEM SOLVER CODING ARTIST FULL STACK FRONTEND BACKEND ";
-    let textToLayout = baseText;
-    for (let i=0; i<50; i++) textToLayout += baseText;
-    
-    let fontStr = "bold 25px 'Inter', system-ui, sans-serif";
-    if (universe === 'lol') fontStr = "bold 25px 'Georgia', serif";
-    if (universe === 'cyberpunk') fontStr = "bold 25px 'Courier New', monospace";
-    if (universe === 'valorant') fontStr = "bold 25px 'Arial', sans-serif";
-
-    // Prepare the text via pretext
-    const prepared = prepareWithSegments(textToLayout, fontStr);
+    const hackerChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*";
+    const scramble = (text: string) => {
+       if (!isMobile) return text;
+       let result = '';
+       for (let i=0; i<text.length; i++) {
+          if (text[i] !== ' ' && Math.random() < 0.05) {
+             result += hackerChars[Math.floor(Math.random() * hackerChars.length)];
+          } else {
+             result += text[i];
+          }
+       }
+       return result;
+    };
 
     let animationFrameId: number;
 
     const render = () => {
       ctx.clearRect(0, 0, width, height);
 
-      const lineHeight = 40;
       ctx.font = fontStr;
       ctx.textBaseline = 'top';
 
       ctx.globalCompositeOperation = 'source-over';
       
       let cursor: LayoutCursor = { segmentIndex: 0, graphemeIndex: 0 };
-      let y = 0;
+      
+      // Animated scroll on mobile
+      let time = performance.now();
+      let scrollSpeed = isMobile ? 0.05 : 0;
+      let yOffset = (time * scrollSpeed) % lineHeight;
+      let y = -yOffset;
+
       const radius = 80;
 
       // Optional subtle glow behind mouse
@@ -98,7 +135,7 @@ export function PretextBackground() {
                 const range = layoutNextLineRange(prepared, cursor, leftWidth);
                 if (range) {
                     const line = materializeLineRange(prepared, range);
-                    let text = line.text;
+                    let text = scramble(line.text);
                     ctx.fillText(text, 0, y);
                     cursor = range.end;
                 } else {
@@ -110,7 +147,7 @@ export function PretextBackground() {
                 const range2 = layoutNextLineRange(prepared, cursor, rightWidth);
                 if (range2) {
                     const line2 = materializeLineRange(prepared, range2);
-                    let text = line2.text;
+                    let text = scramble(line2.text);
                     ctx.fillText(text, rightX, y);
                     cursor = range2.end;
                 } else {
@@ -122,7 +159,7 @@ export function PretextBackground() {
             const range = layoutNextLineRange(prepared, cursor, width);
             if (range) {
                 const line = materializeLineRange(prepared, range);
-                ctx.fillText(line.text, 0, y);
+                ctx.fillText(scramble(line.text), 0, y);
                 cursor = range.end;
             } else {
                 cursor = { segmentIndex: 0, graphemeIndex: 0 };
@@ -132,7 +169,14 @@ export function PretextBackground() {
          y += lineHeight;
       }
 
-      animationFrameId = requestAnimationFrame(render);
+      // Throttle exact frame rate on mobile to emphasize hacker style vs smooth scrolling
+      if (isMobile) {
+        setTimeout(() => {
+           animationFrameId = requestAnimationFrame(render);
+        }, 50);
+      } else {
+        animationFrameId = requestAnimationFrame(render);
+      }
     };
 
     render();
