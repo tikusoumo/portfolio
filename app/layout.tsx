@@ -26,6 +26,11 @@ export const metadata: Metadata = {
   keywords: meta.keywords,
   authors: [{ name: meta.name }],
   creator: meta.name,
+  icons: {
+    icon: meta.favicon || '/favicon.ico',
+    shortcut: meta.favicon || '/favicon.ico',
+    apple: meta.favicon || '/favicon.ico',
+  },
   openGraph: {
     type: 'website',
     locale: 'en_US',

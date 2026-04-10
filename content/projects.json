@@ -283,7 +283,7 @@
     {
       "title": "ThreeJS Web Shader",
       "description": "Advanced GLSL shaders.",
-      "image": "/shader.png",
+      "image": "/Shader.png",
       "technologies": [
         "Three.js",
         "GLSL"
